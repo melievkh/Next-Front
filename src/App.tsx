@@ -1,10 +1,12 @@
-function App() {
+import AppLayout from './layout/AppLayout';
+import AppRouter from './router/Router';
+
+const App = () => {
   return (
-    <div>
-      <h1>hello world</h1>
-      <h1 className="text-3xl font-bold">hello world</h1>
-    </div>
+    <AppLayout>
+      <AppRouter />
+    </AppLayout>
   );
-}
+};
 
 export default App;
