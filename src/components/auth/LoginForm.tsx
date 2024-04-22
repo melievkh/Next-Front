@@ -3,9 +3,11 @@ import { CiLock } from 'react-icons/ci';
 import { MdAlternateEmail } from 'react-icons/md';
 import { SiNextbilliondotai } from 'react-icons/si';
 
+import { AsyncThunks } from '@/store/thunks';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
-import { SignInFormValues } from './types/auth.types';
+import { SignInFormValues } from '@/types/auth.type';
+import { useAppDispatch } from '@/store';
 import { validateForm } from './auth.utils';
 
 const LoginForm = () => {
@@ -14,6 +16,7 @@ const LoginForm = () => {
     email: '',
     password: '',
   });
+  const dispatch = useAppDispatch();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -32,7 +35,7 @@ const LoginForm = () => {
     const errors = validateForm(formValues);
     setErrors(errors);
     if (Object.keys(errors).length === 0) {
-      console.log('Form is valid');
+      dispatch(AsyncThunks.login(formValues));
     }
   };
 
