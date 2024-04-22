@@ -2,7 +2,7 @@ import axiosInstance from '@/common/axios/axiosInstance';
 import { AsyncThunkPayloadCreator } from '@reduxjs/toolkit';
 
 import { ApiErrorResponse } from '@/common/types/api.type';
-import { ENDPOINTS } from '@/common/services/endpoints';
+import { endpoints } from '@/services/endpoints';
 import { storage } from '@/config/storage.config';
 import {
   LoginParams,
@@ -17,7 +17,7 @@ export const loginAsyncThunk: AsyncThunkPayloadCreator<
   { rejectValue: ApiErrorResponse }
 > = async (params, { rejectWithValue }) => {
   try {
-    const response = await axiosInstance.post(ENDPOINTS.login, params);
+    const response = await axiosInstance.post(endpoints.login, params);
 
     localStorage.setItem(storage.ACCESS_TOKEN, response.data.accessToken);
     localStorage.setItem(storage.USER_ID, response.data.userId);
@@ -34,7 +34,7 @@ export const registerAsyncThunk: AsyncThunkPayloadCreator<
   { rejectValue: ApiErrorResponse }
 > = async (params, { rejectWithValue }) => {
   try {
-    const response = await axiosInstance.post(ENDPOINTS.register, params);
+    const response = await axiosInstance.post(endpoints.register, params);
     return response.data;
   } catch (error: any) {
     return rejectWithValue(error?.response.data);

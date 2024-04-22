@@ -1,4 +1,6 @@
-export const ENDPOINTS = {
+export const endpoints = {
   login: '/auth/login',
   register: '/auth/register',
+
+  me: '/user/me',
 };

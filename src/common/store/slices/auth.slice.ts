@@ -12,7 +12,11 @@ const initialState: AuthState = {
 const authSlice = createSlice({
   name: 'auth',
   initialState,
-  reducers: {},
+  reducers: {
+    logout: () => {
+      return initialState;
+    },
+  },
 
   extraReducers: (builder) => {
     builder.addCase(AsyncThunks.login.pending, (state) => {

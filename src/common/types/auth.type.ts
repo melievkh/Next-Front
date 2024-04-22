@@ -26,6 +26,6 @@ export interface RegisterParams {
 export interface AuthState {
   isLoggedIn: boolean;
   userId: string | null;
-  error: any | null;
+  error: any;
   pending: boolean;
 }

@@ -3,3 +3,8 @@ export interface ApiErrorResponse {
   statusCode: number;
   message: string | string[];
 }
+
+export interface ApiSuccessResponse<T> {
+  result: T;
+  success: boolean;
+}

@@ -7,7 +7,9 @@ const AppLayout = ({ children }: { children: ReactNode }) => {
       <Header />
       <Dashboard />
 
-      <div className="w-[75%] pt-20 pl-14 bg-[#f7f7f7]">{children}</div>
+      <div className="w-[75%] max-h-[100vh] pt-20 pl-14 bg-[#f7f7f7] overflow-y-auto">
+        {children}
+      </div>
     </div>
   );
 };
