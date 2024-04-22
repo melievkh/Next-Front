@@ -1,15 +1,15 @@
-import axiosInstance from '@/axios/axiosInstance';
+import axiosInstance from '@/common/axios/axiosInstance';
 import { AsyncThunkPayloadCreator } from '@reduxjs/toolkit';
 
-import { ApiErrorResponse } from '@/types/api.type';
-import { ENDPOINTS } from '@/services/endpoints';
+import { ApiErrorResponse } from '@/common/types/api.type';
+import { ENDPOINTS } from '@/common/services/endpoints';
 import { storage } from '@/config/storage.config';
 import {
   LoginParams,
   LoginResponse,
   RegisterParams,
   RegisterResponse,
-} from '@/types/auth.type';
+} from '@/common/types/auth.type';
 
 export const loginAsyncThunk: AsyncThunkPayloadCreator<
   LoginResponse,

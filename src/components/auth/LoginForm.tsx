@@ -3,11 +3,11 @@ import { CiLock } from 'react-icons/ci';
 import { MdAlternateEmail } from 'react-icons/md';
 import { SiNextbilliondotai } from 'react-icons/si';
 
-import { AsyncThunks } from '@/store/thunks';
+import { AsyncThunks } from '@/common/store/thunks';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
-import { SignInFormValues } from '@/types/auth.type';
-import { useAppDispatch } from '@/store';
+import { SignInFormValues } from '@/common/types/auth.type';
+import { useAppDispatch } from '@/common/store';
 import { validateForm } from './auth.utils';
 
 const LoginForm = () => {

@@ -1,3 +1,3 @@
 export const config = {
-  BASE_URL: 'http://localhost:4040/api',
+  BASE_URL: process.env.VITE_BASE_URL,
 };

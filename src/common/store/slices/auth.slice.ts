@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { AsyncThunks } from '../thunks';
-import { AuthState } from '@/types/auth.type';
+import { AuthState } from '@/common/types/auth.type';
 
 const initialState: AuthState = {
   isLoggedIn: false,
