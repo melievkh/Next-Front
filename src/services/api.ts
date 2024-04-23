@@ -1,5 +1,4 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { toast } from 'sonner';
 
 import { authActions } from '@/common/store/slices/auth.slice';
 import { config } from '@/config/app.config';
@@ -28,10 +27,7 @@ const baseQueryWithReauth = async (args: any, api: any, extraOptions: any) => {
   }
 
   if (error && error?.data) {
-    toast('Error!', {
-      duration: 3000,
-      description: error.data.message,
-    });
+    console.log(error);
   }
 
   return result;

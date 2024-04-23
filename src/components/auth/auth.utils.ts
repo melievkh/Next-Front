@@ -1,4 +1,4 @@
-import { SignInFormValues } from './types/auth.types';
+import { SignInFormValues } from '@/common/types/auth.type';
 
 export const validateForm = (formValues: SignInFormValues) => {
   const errors: { [key: string]: string } = {};

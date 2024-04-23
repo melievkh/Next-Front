@@ -1,17 +1,7 @@
 import { useState } from 'react';
-import { CiFilter } from 'react-icons/ci';
 
 import { useGetProductsQuery } from '@/services/product.service';
-import { Button } from '@/components/ui/button';
 import Table from './components/Table';
-import {
-  Dialog,
-  DialogContent,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from '@/components/ui/dialog';
 
 interface FilterOptions {
   search: string;
@@ -38,28 +28,9 @@ const Products: React.FC = () => {
   //   }));
   // };
 
-  console.log(data);
-
   return (
     <div className="p-4 h-[100vh]">
-      <div className="flex items-center justify-between mb-4">
-        <Dialog>
-          <DialogTrigger asChild>
-            <Button variant="outline">
-              <CiFilter /> filter
-            </Button>
-          </DialogTrigger>
-          <DialogContent className="sm:max-w-[425px]">
-            <DialogHeader>
-              <DialogTitle>Filter products by:</DialogTitle>
-            </DialogHeader>
-
-            <DialogFooter>
-              <Button type="submit">Filter</Button>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
-      </div>
+      <div className="flex items-center justify-between mb-4"></div>
 
       <Table data={data?.result} />
     </div>

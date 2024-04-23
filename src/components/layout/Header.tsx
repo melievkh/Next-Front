@@ -1,48 +1,79 @@
-import { useAppDispatch } from '@/common/store';
-import { GiBrightExplosion } from 'react-icons/gi';
-import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
+import { useMemo, useState } from 'react';
+import { Button, Layout, Popover, theme } from 'antd';
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from '../ui/dropdown-menu';
-import { useGetMeQuery } from '@/services/user.service';
-import { authActions } from '@/common/store/slices/auth.slice';
+  MenuUnfoldOutlined,
+  MenuFoldOutlined,
+  UserOutlined,
+} from '@ant-design/icons';
 
-const Header = () => {
+import { authActions } from '@/common/store/slices/auth.slice';
+import { useAppDispatch } from '@/common/store';
+import { useGetMeQuery } from '@/services/user.service';
+
+const { Header } = Layout;
+
+type LayoutHeaderProps = {
+  collapsed: boolean;
+  setCollapsed: (collapsed: boolean) => void;
+};
+
+const LayoutHeader = ({ collapsed, setCollapsed }: LayoutHeaderProps) => {
   const dispatch = useAppDispatch();
+  const [arrow, setArrow] = useState<string>('Show');
   const { data } = useGetMeQuery({});
-  const user = data?.result;
+  const {
+    token: { colorBgContainer },
+  } = theme.useToken();
 
   const handleLogout = () => {
     dispatch(authActions.logout());
   };
 
+  const mergedArrow = useMemo(() => {
+    if (arrow === 'Hide') {
+      return false;
+    }
+
+    if (arrow === 'Show') {
+      return true;
+    }
+
+    return {
+      pointAtCenter: true,
+    };
+  }, [arrow]);
+
   return (
-    <div className="w-[100%] h-16 fixed top-0 pl-8 pr-8 flex justify-between items-center shadow-sm bg-white">
-      <div className="flex items-center gap-3">
-        <GiBrightExplosion size={30} />
-        <h1 className="font-bold text-[30px]">Next</h1>
-      </div>
+    <Header
+      style={{ background: colorBgContainer }}
+      className="p-0 flex justify-between items-center pr-10"
+    >
+      <Button
+        type="text"
+        icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+        onClick={() => setCollapsed(!collapsed)}
+        style={{
+          fontSize: '16px',
+          width: 64,
+          height: 64,
+        }}
+      />
 
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <div className="flex gap-2 items-center">
-            <Avatar>
-              <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
-              <AvatarFallback>CN</AvatarFallback>
-            </Avatar>
-            <h1 className="text-md">{user?.email}</h1>
-          </div>
-        </DropdownMenuTrigger>
-
-        <DropdownMenuContent>
-          <DropdownMenuItem onClick={handleLogout}>Sign out</DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
-    </div>
+      <Popover
+        placement="bottomLeft"
+        content={
+          <Button type="default" danger onClick={handleLogout}>
+            sign out
+          </Button>
+        }
+        arrow={mergedArrow}
+        className="flex gap-2 items-center"
+      >
+        <Button type="primary" shape="circle" icon={<UserOutlined />} />
+        {data?.result.email}
+      </Popover>
+    </Header>
   );
 };
 
-export default Header;
+export default LayoutHeader;
