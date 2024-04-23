@@ -6,7 +6,7 @@ export interface InputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string;
   icon?: React.ReactNode;
-  error?: string; // Add error prop
+  error?: string;
 }
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(

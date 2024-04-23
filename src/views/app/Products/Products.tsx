@@ -4,6 +4,14 @@ import { CiFilter } from 'react-icons/ci';
 import { useGetProductsQuery } from '@/services/product.service';
 import { Button } from '@/components/ui/button';
 import Table from './components/Table';
+import {
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog';
 
 interface FilterOptions {
   search: string;
@@ -35,10 +43,22 @@ const Products: React.FC = () => {
   return (
     <div className="p-4 h-[100vh]">
       <div className="flex items-center justify-between mb-4">
-        <Button variant="outline" size="sm">
-          <CiFilter />
-          filter
-        </Button>
+        <Dialog>
+          <DialogTrigger asChild>
+            <Button variant="outline">
+              <CiFilter /> filter
+            </Button>
+          </DialogTrigger>
+          <DialogContent className="sm:max-w-[425px]">
+            <DialogHeader>
+              <DialogTitle>Filter products by:</DialogTitle>
+            </DialogHeader>
+
+            <DialogFooter>
+              <Button type="submit">Filter</Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
       </div>
 
       <Table data={data?.result} />
