@@ -3,6 +3,35 @@ export enum ProductCategory {
   CLOTHES = 'clothes',
 }
 
+export enum ProductSize {
+  MEDIUM = 'M',
+  SMALL = 'S',
+  XSMALL = 'XS',
+  LARGE = 'L',
+  XLARGE = 'XL',
+  XXLARGE = 'XXL',
+  S38 = '38',
+  S39 = '39',
+  S40 = '40',
+  S41 = '41',
+  S42 = '42',
+  S43 = '43',
+  S44 = '44',
+  S45 = '45',
+  S46 = '46',
+}
+
+export enum ProductColor {
+  WHITE = 'white',
+  BLACK = 'black',
+  RED = 'red',
+  BLUE = 'blue',
+  GREEN = 'green',
+  YELLOW = 'yellow',
+  ORANGE = 'orange',
+  PURPLE = 'purple',
+}
+
 export interface Product {
   _id: string;
   code: number;
@@ -12,6 +41,6 @@ export interface Product {
   price: number;
   description?: string;
   category: ProductCategory;
-  sizes: string[];
-  colors: string[];
+  sizes: ProductSize[];
+  colors: ProductColor[];
 }

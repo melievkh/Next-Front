@@ -1,38 +1,76 @@
 import { useState } from 'react';
+import { Flex, Input } from 'antd';
 
 import { useGetProductsQuery } from '@/services/product.service';
+import {
+  ProductCategory,
+  ProductColor,
+  ProductSize,
+} from '@/common/types/product.type';
 import Table from './components/Table';
+import { FilterProducts } from '@/components/modals';
 
-interface FilterOptions {
-  search: string;
-  brand: string;
-  size: string;
-  color: string;
-  price: string;
+export interface FilterOptions {
+  limit?: number;
+  page?: number;
+  code: number | null;
+  category: ProductCategory | null;
+  brand: string | null;
+  sizes: ProductSize[];
+  colors: ProductColor[];
 }
 
-const Products: React.FC = () => {
-  const [filters, setFilters] = useState<FilterOptions>({
-    search: '',
-    brand: '',
-    size: '',
-    color: '',
-    price: '',
-  });
-  const { data } = useGetProductsQuery(filters);
+const { Search } = Input;
 
-  // const handleFilterChange = (key: keyof FilterOptions, value: string) => {
-  //   setFilters((prevFilters) => ({
-  //     ...prevFilters,
-  //     [key]: value,
-  //   }));
-  // };
+const Products = () => {
+  const [showModal, setShowModal] = useState<boolean>(false);
+  const [code, setCode] = useState<number | null>(null);
+  const [filters, setFilters] = useState<FilterOptions>({
+    limit: 10,
+    page: 1,
+    code: null,
+    category: null,
+    brand: null,
+    sizes: [],
+    colors: [],
+  });
+  const { data, isLoading } = useGetProductsQuery(filters);
+
+  const handleSearch = () => {
+    setFilters({ ...filters, code });
+  };
+
+  const handleOnCodeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setCode(e.target.value ? parseInt(e.target.value) : null);
+  };
 
   return (
-    <div className="p-4 h-[100vh]">
-      <div className="flex items-center justify-between mb-4"></div>
+    <div>
+      <Flex gap={10} justify="space-between">
+        <Search
+          placeholder="Search for products by code"
+          loading={isLoading}
+          enterButton
+          value={code as number}
+          onChange={handleOnCodeChange}
+          onSearch={handleSearch}
+          style={{ width: '60%' }}
+        />
 
-      <Table data={data?.result} />
+        <FilterProducts
+          visibile={showModal}
+          setVisible={setShowModal}
+          filters={filters}
+          setFilters={setFilters}
+        />
+      </Flex>
+
+      <Table
+        data={data}
+        isLoading={isLoading}
+        filters={filters}
+        setFilters={setFilters}
+      />
     </div>
   );
 };

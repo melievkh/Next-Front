@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { notification } from 'antd';
 
 import { authActions } from '@/common/store/slices/auth.slice';
 import { config } from '@/config/app.config';
@@ -21,13 +22,15 @@ const baseQueryWithReauth = async (args: any, api: any, extraOptions: any) => {
 
   const error = result.error;
 
-  if ((error && error.status === 401) || error?.status === 500) {
+  if (error && error.status === 401) {
     api.dispatch(authActions.logout());
     window.location.href = '/login';
   }
 
   if (error && error?.data) {
-    console.log(error);
+    notification.error({
+      message: error.data?.message,
+    });
   }
 
   return result;

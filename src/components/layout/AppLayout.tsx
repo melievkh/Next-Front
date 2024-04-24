@@ -1,12 +1,8 @@
-import { Layout, Menu, theme } from 'antd';
+import { Layout, theme } from 'antd';
 import { ReactNode, useState } from 'react';
-import {
-  MdOutlineDashboard,
-  MdOutlineProductionQuantityLimits,
-  MdOutlineBookmarkBorder,
-} from 'react-icons/md';
 
 import LayoutHeader from './Header';
+import MenuContent from './MenuContent';
 
 const { Sider, Content } = Layout;
 
@@ -16,33 +12,10 @@ const AppLayout = ({ children }: { children: ReactNode }) => {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
 
-  const menuItems = [
-    {
-      key: '1',
-      icon: <MdOutlineDashboard />,
-      label: 'Dashboard',
-    },
-    {
-      key: '2',
-      icon: <MdOutlineProductionQuantityLimits />,
-      label: 'Products',
-    },
-    {
-      key: '3',
-      icon: <MdOutlineBookmarkBorder />,
-      label: 'Orders',
-    },
-  ];
-
   return (
     <Layout className="h-[100vh]">
       <Sider trigger={null} collapsible collapsed={collapsed}>
-        <Menu
-          theme="dark"
-          mode="inline"
-          defaultSelectedKeys={['1']}
-          items={menuItems}
-        />
+        <MenuContent />
       </Sider>
 
       <Layout>
@@ -55,6 +28,7 @@ const AppLayout = ({ children }: { children: ReactNode }) => {
             minHeight: 280,
             background: colorBgContainer,
             borderRadius: borderRadiusLG,
+            overflow: 'auto',
           }}
         >
           {children}

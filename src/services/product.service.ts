@@ -1,9 +1,15 @@
+import QueryString from 'qs';
 import { TagTypes, api } from './api';
 
 const productService = api.injectEndpoints({
   endpoints: (builder) => ({
     getProducts: builder.query({
-      query: (qs) => `products?${qs && new URLSearchParams(qs).toString()}`,
+      query: (q) =>
+        `products?${QueryString.stringify(q, {
+          skipNulls: true,
+          allowDots: false,
+          strictNullHandling: true,
+        })}`,
       providesTags: [TagTypes.GET_PRODUCTS],
     }),
   }),
