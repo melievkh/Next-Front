@@ -1,6 +1,6 @@
 const categoryOptions = [
   { value: 'shoes', label: 'Shoes' },
-  { value: 'cloth', label: 'Cloth' },
+  { value: 'clothes', label: 'Clothes' },
 ];
 
 const sizeOptions = [
@@ -36,18 +36,9 @@ const colorOptions = [
 ];
 
 const brandOptions = [
-  { value: 'nike', label: 'Nike' },
-  { value: 'adidas', label: 'Adidas' },
-  { value: 'puma', label: 'Puma' },
-  { value: 'reebok', label: 'Reebok' },
-  { value: 'vans', label: 'Vans' },
-  { value: 'new balance', label: 'New Balance' },
-  { value: 'under armour', label: 'Under Armour' },
-  { value: 'converse', label: 'Converse' },
-  { value: 'fila', label: 'Fila' },
-  { value: 'yeezy', label: 'Yeezy' },
-  { value: 'supreme', label: 'Supreme' },
-  { value: 'lacoste', label: 'Lacoste' },
+  { value: 'Nike', label: 'Nike' },
+  { value: 'Adidas', label: 'Adidas' },
+  { value: 'Reebok', label: 'Reebok' },
 ];
 
 export { categoryOptions, sizeOptions, colorOptions, brandOptions };

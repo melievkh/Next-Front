@@ -32,9 +32,15 @@ export enum ProductColor {
   PURPLE = 'purple',
 }
 
+export enum ProductBrand {
+  NIKE = 'Nike',
+  ADIDAS = 'Adidas',
+  REEBOK = 'Reebok',
+}
+
 export interface Product {
   _id: string;
-  code: number;
+  code: string;
   title: string;
   brand: string;
   images: string[];

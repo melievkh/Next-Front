@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Button, Layout, Popover, theme } from 'antd';
 import {
   MenuUnfoldOutlined,
@@ -9,6 +10,7 @@ import {
 import { authActions } from '@/common/store/slices/auth.slice';
 import { useAppDispatch } from '@/common/store';
 import { useGetMeQuery } from '@/services/user.service';
+import { ROUTES } from '@/router/routes';
 
 const { Header } = Layout;
 
@@ -19,6 +21,7 @@ type LayoutHeaderProps = {
 
 const LayoutHeader = ({ collapsed, setCollapsed }: LayoutHeaderProps) => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const [arrow, setArrow] = useState<string>('Show');
   const { data } = useGetMeQuery({});
   const {
@@ -27,6 +30,7 @@ const LayoutHeader = ({ collapsed, setCollapsed }: LayoutHeaderProps) => {
 
   const handleLogout = () => {
     dispatch(authActions.logout());
+    navigate(ROUTES.LOGIN);
   };
 
   const mergedArrow = useMemo(() => {

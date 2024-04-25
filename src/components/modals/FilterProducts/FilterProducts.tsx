@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Button, Flex, Modal, Select, Typography } from 'antd';
 import { HiOutlineFilter } from 'react-icons/hi';
 
@@ -9,17 +10,17 @@ import {
   sizeOptions,
 } from './FilterProducts.constants';
 import {
+  ProductBrand,
   ProductCategory,
   ProductColor,
   ProductSize,
 } from '@/common/types/product.type';
-import { useState } from 'react';
 
 type Props = {
   visibile: boolean;
   setVisible: React.Dispatch<React.SetStateAction<boolean>>;
   filters: FilterOptions;
-  setFilters: React.Dispatch<React.SetStateAction<any>>;
+  setFilters: React.Dispatch<React.SetStateAction<FilterOptions>>;
 };
 
 const FilterProducts = ({
@@ -35,30 +36,44 @@ const FilterProducts = ({
     sizes: filters.sizes,
   });
   const handleSizeChange = (value: ProductSize[]) => {
-    setFilterOptions({ ...filters, sizes: value });
+    setFilterOptions({ ...filterOptions, sizes: value });
   };
 
   const handleColorChange = (value: ProductColor[]) => {
-    setFilterOptions({ ...filters, colors: value });
+    setFilterOptions({ ...filterOptions, colors: value });
   };
 
-  const handleBrandChange = (value: string) => {
-    setFilterOptions({ ...filters, brand: value });
+  const handleBrandChange = (value: ProductBrand) => {
+    setFilterOptions({ ...filterOptions, brand: value });
   };
 
   const handleCategoryChange = (value: ProductCategory) => {
-    setFilterOptions({ ...filters, category: value });
+    setFilterOptions({ ...filterOptions, category: value });
   };
 
   const handleFilter = () => {
-    setFilters({ ...filterOptions });
+    setFilters({
+      ...filters,
+      ...filterOptions,
+    });
+    setVisible(false);
+  };
+
+  const handleClear = () => {
+    setFilterOptions({
+      brand: null,
+      category: null,
+      colors: [],
+      sizes: [],
+    });
+    setFilters({ ...filters, ...filterOptions });
   };
 
   return (
     <>
       <Flex gap={10} align="center">
         <Typography.Text>Filter:</Typography.Text>
-        <Button onClick={() => setVisible(true)}>
+        <Button size="large" onClick={() => setVisible(true)}>
           <HiOutlineFilter />
         </Button>
       </Flex>
@@ -70,32 +85,60 @@ const FilterProducts = ({
         onOk={handleFilter}
         onCancel={() => setVisible(false)}
         cancelText="cancel"
+        footer={
+          <Flex justify="flex-end" gap={10}>
+            <Button onClick={handleClear}>Clear</Button>
+            <Button type="primary" onClick={handleFilter}>
+              Search
+            </Button>
+          </Flex>
+        }
       >
         <Flex vertical gap={10}>
-          <Select
-            placeholder="Category"
-            onChange={handleCategoryChange}
-            options={categoryOptions}
-          />
-          <Select
-            placeholder="Brand"
-            onChange={handleBrandChange}
-            options={brandOptions}
-          />
-          <Select
-            mode="multiple"
-            allowClear
-            placeholder="Colors"
-            onChange={handleColorChange}
-            options={colorOptions}
-          />
-          <Select
-            mode="multiple"
-            allowClear
-            placeholder="Sizes"
-            onChange={handleSizeChange}
-            options={sizeOptions}
-          />
+          <Flex vertical gap={4}>
+            <label>Category</label>
+            <Select
+              placeholder="category"
+              onChange={handleCategoryChange}
+              options={categoryOptions}
+              value={filterOptions.category}
+            />
+          </Flex>
+
+          <Flex vertical gap={4}>
+            <label>Brand</label>
+            <Select
+              placeholder="brand"
+              onChange={handleBrandChange}
+              options={brandOptions}
+              value={filterOptions.brand}
+            />
+          </Flex>
+
+          <Flex justify="space-between">
+            <Flex vertical style={{ width: '45%' }} gap={4}>
+              <label>Colors: </label>
+              <Select
+                mode="multiple"
+                allowClear
+                placeholder="Colors"
+                onChange={handleColorChange}
+                options={colorOptions}
+                value={filterOptions.colors}
+              />
+            </Flex>
+            <Flex vertical style={{ width: '45%' }} gap={4}>
+              <label>Sizes: </label>
+              <Select
+                mode="multiple"
+                allowClear
+                placeholder="Sizes"
+                onChange={handleSizeChange}
+                options={sizeOptions}
+                value={filterOptions.sizes}
+              />
+            </Flex>
+          </Flex>
         </Flex>
       </Modal>
     </>

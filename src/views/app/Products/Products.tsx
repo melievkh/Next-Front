@@ -1,8 +1,10 @@
 import { useState } from 'react';
-import { Flex, Input } from 'antd';
+import { Button, Flex, Input } from 'antd';
+import { CiSearch, CiCirclePlus } from 'react-icons/ci';
 
 import { useGetProductsQuery } from '@/services/product.service';
 import {
+  ProductBrand,
   ProductCategory,
   ProductColor,
   ProductSize,
@@ -13,18 +15,15 @@ import { FilterProducts } from '@/components/modals';
 export interface FilterOptions {
   limit?: number;
   page?: number;
-  code: number | null;
+  code: string | null;
   category: ProductCategory | null;
-  brand: string | null;
+  brand: ProductBrand | null;
   sizes: ProductSize[];
   colors: ProductColor[];
 }
 
-const { Search } = Input;
-
 const Products = () => {
   const [showModal, setShowModal] = useState<boolean>(false);
-  const [code, setCode] = useState<number | null>(null);
   const [filters, setFilters] = useState<FilterOptions>({
     limit: 10,
     page: 1,
@@ -36,33 +35,34 @@ const Products = () => {
   });
   const { data, isLoading } = useGetProductsQuery(filters);
 
-  const handleSearch = () => {
-    setFilters({ ...filters, code });
-  };
-
   const handleOnCodeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCode(e.target.value ? parseInt(e.target.value) : null);
+    const inputValue = e.target.value;
+    setFilters({ ...filters, code: inputValue });
   };
 
   return (
-    <div>
+    <Flex gap={20} vertical>
       <Flex gap={10} justify="space-between">
-        <Search
-          placeholder="Search for products by code"
-          loading={isLoading}
-          enterButton
-          value={code as number}
-          onChange={handleOnCodeChange}
-          onSearch={handleSearch}
-          style={{ width: '60%' }}
-        />
+        <Flex gap={20}>
+          <Input
+            placeholder="Search for products by code"
+            onChange={handleOnCodeChange}
+            prefix={<CiSearch size={20} />}
+            style={{ width: '300px' }}
+            size="large"
+          />
+          <FilterProducts
+            visibile={showModal}
+            setVisible={setShowModal}
+            filters={filters}
+            setFilters={setFilters}
+          />
+        </Flex>
 
-        <FilterProducts
-          visibile={showModal}
-          setVisible={setShowModal}
-          filters={filters}
-          setFilters={setFilters}
-        />
+        <Button type="primary" size="large" className="flex items-center gap-2">
+          <CiCirclePlus size={22} />
+          Create Product
+        </Button>
       </Flex>
 
       <Table
@@ -71,7 +71,7 @@ const Products = () => {
         filters={filters}
         setFilters={setFilters}
       />
-    </div>
+    </Flex>
   );
 };
 
