@@ -33,8 +33,10 @@ const MenuContent = () => {
     },
   ];
 
-  const selectedKey = menuItems.find(
-    (item) => item.to === location.pathname,
+  const basePath = location.pathname.split('/')[1];
+
+  const selectedKey = menuItems.find((item) =>
+    item.to.includes(`/${basePath}`),
   )?.key;
 
   return (

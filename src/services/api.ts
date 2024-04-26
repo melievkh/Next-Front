@@ -22,11 +22,11 @@ const baseQueryWithReauth = async (args: any, api: any, extraOptions: any) => {
 
   const error = result.error;
 
-  console.log(error);
-
   if (error && error.status === 401) {
+    notification.error({
+      message: 'Please login again!',
+    });
     api.dispatch(authActions.logout());
-    window.location.href = '/login';
   }
 
   if (error && error.status === 'FETCH_ERROR') {

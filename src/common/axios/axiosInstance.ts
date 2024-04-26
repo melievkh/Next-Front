@@ -1,5 +1,6 @@
 import { config } from '@/config/app.config';
 import { storage } from '@/config/storage.config';
+import { notification } from 'antd';
 import axios, { AxiosResponse } from 'axios';
 
 const axiosInstance = axios.create({
@@ -27,7 +28,9 @@ axiosInstance.interceptors.response.use(
     return response;
   },
   (error) => {
-    console.log(error, 'error');
+    notification.error({
+      message: error.response.data.message,
+    });
     return Promise.reject(error);
   },
 );
