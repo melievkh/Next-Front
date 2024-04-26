@@ -4,7 +4,7 @@ import { ReactNode, useState } from 'react';
 import LayoutHeader from './Header';
 import MenuContent from './MenuContent';
 
-const { Sider, Content, Footer } = Layout;
+const { Sider, Content } = Layout;
 
 const AppLayout = ({ children }: { children: ReactNode }) => {
   const [collapsed, setCollapsed] = useState<boolean>(false);
