@@ -22,9 +22,17 @@ const baseQueryWithReauth = async (args: any, api: any, extraOptions: any) => {
 
   const error = result.error;
 
+  console.log(error);
+
   if (error && error.status === 401) {
     api.dispatch(authActions.logout());
     window.location.href = '/login';
+  }
+
+  if (error && error.status === 'FETCH_ERROR') {
+    notification.error({
+      message: 'Internal Server Error!',
+    });
   }
 
   if (error && error?.data) {
@@ -39,6 +47,7 @@ const baseQueryWithReauth = async (args: any, api: any, extraOptions: any) => {
 export const TagTypes = {
   GET_ME: 'GET_ME',
   GET_PRODUCTS: 'GET_PRODUCTS',
+  GET_PRODUCT: 'GET_PRODUCT',
 };
 
 export const api = createApi({

@@ -12,18 +12,21 @@ const MenuContent = () => {
       key: '1',
       icon: <MdOutlineDashboard />,
       label: 'Dashboard',
+      title: 'Dashboard',
       to: '/',
     },
     {
       key: '2',
       icon: <MdOutlineProductionQuantityLimits />,
       label: 'Products',
+      title: 'Products',
       to: '/products',
     },
     {
       key: '3',
       icon: <MdOutlineBookmarkBorder />,
       label: 'Orders',
+      title: 'Orders',
       to: '/orders',
     },
   ];

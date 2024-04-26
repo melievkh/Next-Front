@@ -26,16 +26,11 @@ export enum ProductColor {
   BLACK = 'black',
   RED = 'red',
   BLUE = 'blue',
+  GRAY = 'gray',
   GREEN = 'green',
   YELLOW = 'yellow',
   ORANGE = 'orange',
   PURPLE = 'purple',
-}
-
-export enum ProductBrand {
-  NIKE = 'Nike',
-  ADIDAS = 'Adidas',
-  REEBOK = 'Reebok',
 }
 
 export interface Product {
@@ -50,3 +45,17 @@ export interface Product {
   sizes: ProductSize[];
   colors: ProductColor[];
 }
+
+export interface CreateProduct {
+  code: string;
+  title: string;
+  brand: string;
+  images: string[];
+  price: number;
+  description?: string;
+  category: ProductCategory | string;
+  sizes: ProductSize[];
+  colors: ProductColor[];
+}
+
+export interface UpdateProduct extends CreateProduct {}

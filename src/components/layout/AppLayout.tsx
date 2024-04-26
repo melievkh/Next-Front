@@ -4,7 +4,7 @@ import { ReactNode, useState } from 'react';
 import LayoutHeader from './Header';
 import MenuContent from './MenuContent';
 
-const { Sider, Content } = Layout;
+const { Sider, Content, Footer } = Layout;
 
 const AppLayout = ({ children }: { children: ReactNode }) => {
   const [collapsed, setCollapsed] = useState<boolean>(false);
@@ -19,6 +19,7 @@ const AppLayout = ({ children }: { children: ReactNode }) => {
       </Sider>
 
       <Layout>
+        <div className="demo-logo" />
         <LayoutHeader collapsed={collapsed} setCollapsed={setCollapsed} />
 
         <Content

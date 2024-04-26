@@ -22,23 +22,15 @@ const sizeOptions = [
 ];
 
 const colorOptions = [
+  { value: 'white', label: 'White' },
+  { value: 'black', label: 'Black' },
   { value: 'red', label: 'Red' },
   { value: 'blue', label: 'Blue' },
+  { value: 'gray', label: 'Gray' },
   { value: 'green', label: 'Green' },
   { value: 'yellow', label: 'Yellow' },
-  { value: 'black', label: 'Black' },
-  { value: 'white', label: 'White' },
-  { value: 'gray', label: 'Gray' },
-  { value: 'brown', label: 'Brown' },
   { value: 'orange', label: 'Orange' },
   { value: 'purple', label: 'Purple' },
-  { value: 'pink', label: 'Pink' },
 ];
 
-const brandOptions = [
-  { value: 'Nike', label: 'Nike' },
-  { value: 'Adidas', label: 'Adidas' },
-  { value: 'Reebok', label: 'Reebok' },
-];
-
-export { categoryOptions, sizeOptions, colorOptions, brandOptions };
+export { categoryOptions, colorOptions, sizeOptions };
