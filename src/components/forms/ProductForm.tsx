@@ -36,11 +36,21 @@ const ProductForm = ({ mode, productData }: Props) => {
 
   const handleFormSubmit = async (values: any) => {
     try {
+      const imagesArray = values.images
+        .split(',')
+        .map((url: string) => url.trim());
+
       if (isEditMode) {
         await updateProduct({ _id: productData?._id, ...values }).unwrap();
         message.success('Product updated successfully');
       } else {
-        await createProduct(values).unwrap();
+        const productToCreate = {
+          ...values,
+          price: Number(values.price),
+          images: imagesArray,
+        };
+        console.log(productToCreate);
+        await createProduct(productToCreate).unwrap();
         message.success('Product created successfully');
       }
     } catch (error) {

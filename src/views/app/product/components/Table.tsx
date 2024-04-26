@@ -58,6 +58,7 @@ const Table = ({ data, isLoading, filters, setFilters }: Props) => {
         message.success('Deleted successfully');
       })
       .catch((error) => console.log(error));
+    setSelectedRowKeys([]);
   };
 
   const rowSelection: TableRowSelection<DataType> = {
@@ -77,7 +78,11 @@ const Table = ({ data, isLoading, filters, setFilters }: Props) => {
       dataIndex: 'images',
       key: 'images',
       render: (images) => {
-        return <Image src={images[0]} height={110} width={120} />;
+        return (
+          <Image.PreviewGroup items={images}>
+            <Image width={200} src={images[0]} />
+          </Image.PreviewGroup>
+        );
       },
     },
     {
