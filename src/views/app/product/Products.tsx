@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button, Flex, Input } from 'antd';
+import { Button, Flex, Input, Typography } from 'antd';
 import { CiSearch, CiCirclePlus } from 'react-icons/ci';
 
 import { useGetProductsQuery } from '@/services/productService';
@@ -58,6 +58,7 @@ const Products = () => {
 
   return (
     <Flex gap={20} vertical>
+      <Typography.Title level={2}>Base Info</Typography.Title>
       <Flex gap={10} justify="space-between">
         <Flex gap={20}>
           <Input

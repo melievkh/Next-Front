@@ -1,5 +1,6 @@
 import QueryString from 'qs';
 import { TagTypes, api } from './api';
+import { endpoints } from './endpoints';
 
 const productService = api.injectEndpoints({
   endpoints: (builder) => ({
@@ -13,12 +14,12 @@ const productService = api.injectEndpoints({
       providesTags: [TagTypes.GET_PRODUCTS],
     }),
     getProduct: builder.query({
-      query: (id) => `products/${id}`,
+      query: (id) => endpoints.product(id),
       providesTags: [TagTypes.GET_PRODUCT],
     }),
     createProduct: builder.mutation({
       query: (product) => ({
-        url: '/products',
+        url: endpoints.productCreate,
         method: 'POST',
         body: product,
       }),
@@ -26,7 +27,7 @@ const productService = api.injectEndpoints({
     }),
     updateProduct: builder.mutation({
       query: (product) => ({
-        url: `/products/${product._id}`,
+        url: endpoints.productUpdate(product._id),
         method: 'PATCH',
         body: product,
       }),
@@ -34,7 +35,7 @@ const productService = api.injectEndpoints({
     }),
     deleteProduct: builder.mutation({
       query: (ids) => ({
-        url: `/products/delete`,
+        url: endpoints.productDelete,
         method: 'POST',
         body: ids,
       }),

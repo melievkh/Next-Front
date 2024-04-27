@@ -175,10 +175,10 @@ const Table = ({ data, isLoading, filters, setFilters }: Props) => {
       )}
 
       <ATable
+        rowKey="_id"
         columns={columns}
         dataSource={data?.result}
         loading={isLoading}
-        rowKey={(record) => record._id}
         rowSelection={rowSelection}
         pagination={{
           total: data?.count,

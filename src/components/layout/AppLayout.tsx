@@ -9,7 +9,7 @@ const { Sider, Content } = Layout;
 const AppLayout = ({ children }: { children: ReactNode }) => {
   const [collapsed, setCollapsed] = useState<boolean>(false);
   const {
-    token: { colorBgContainer, borderRadiusLG },
+    token: { colorBgContainer },
   } = theme.useToken();
 
   return (
@@ -24,11 +24,9 @@ const AppLayout = ({ children }: { children: ReactNode }) => {
 
         <Content
           style={{
-            margin: '24px 16px',
             padding: 24,
             minHeight: 280,
             background: colorBgContainer,
-            borderRadius: borderRadiusLG,
             overflow: 'auto',
           }}
         >
