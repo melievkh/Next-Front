@@ -9,7 +9,7 @@ import {
 
 import { authActions } from '@/common/store/slices/auth.slice';
 import { useAppDispatch } from '@/common/store';
-import { useGetMeQuery } from '@/services/user.service';
+import { useGetMeQuery } from '@/services/userService';
 import { ROUTES } from '@/router/routes';
 
 const { Header } = Layout;

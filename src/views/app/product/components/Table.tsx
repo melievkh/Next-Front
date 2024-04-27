@@ -14,7 +14,7 @@ import { MdOutlineEdit, MdDelete } from 'react-icons/md';
 import { Product } from '@/common/types/product.type';
 import { FilterOptions } from '../Products';
 import { TableRowSelection } from 'antd/es/table/interface';
-import { useDeleteProductMutation } from '@/services/product.service';
+import { useDeleteProductMutation } from '@/services/productService';
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '@/router/routes';
 

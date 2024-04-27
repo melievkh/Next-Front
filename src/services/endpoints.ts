@@ -3,4 +3,6 @@ export const endpoints = {
   register: '/auth/register',
 
   me: '/user/me',
+
+  orders: '/orders',
 };

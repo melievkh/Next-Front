@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Button, Flex, Input } from 'antd';
 import { CiSearch, CiCirclePlus } from 'react-icons/ci';
 
-import { useGetProductsQuery } from '@/services/product.service';
+import { useGetProductsQuery } from '@/services/productService';
 import {
   ProductCategory,
   ProductColor,

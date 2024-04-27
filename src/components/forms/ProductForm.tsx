@@ -18,7 +18,7 @@ import { Product } from '@/common/types/product.type';
 import {
   useCreateProductMutation,
   useUpdateProductMutation,
-} from '@/services/product.service';
+} from '@/services/productService';
 
 type Props = { mode: string; productData?: Product };
 

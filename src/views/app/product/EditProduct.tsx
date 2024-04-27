@@ -1,7 +1,7 @@
 import { useLocation } from 'react-router-dom';
 
 import { ProductForm } from '@/components/forms';
-import { useGetProductQuery } from '@/services/product.service';
+import { useGetProductQuery } from '@/services/productService';
 
 const EditProduct = () => {
   const location = useLocation();
@@ -10,9 +10,9 @@ const EditProduct = () => {
   const { data } = useGetProductQuery(productId);
 
   return (
-    <div>
+    <>
       <ProductForm productData={data?.result} mode="EDIT" />
-    </div>
+    </>
   );
 };
 

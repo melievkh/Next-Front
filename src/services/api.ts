@@ -48,6 +48,7 @@ export const TagTypes = {
   GET_ME: 'GET_ME',
   GET_PRODUCTS: 'GET_PRODUCTS',
   GET_PRODUCT: 'GET_PRODUCT',
+  GET_ORDERS: 'GET_ORDERS',
 };
 
 export const api = createApi({
