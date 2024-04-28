@@ -5,6 +5,7 @@ import { AuthState } from '@/common/types/auth.type';
 const initialState: AuthState = {
   isLoggedIn: false,
   userId: null,
+  userRole: null,
   error: null,
   pending: false,
 };
@@ -26,6 +27,7 @@ const authSlice = createSlice({
       state.pending = false;
       state.isLoggedIn = true;
       state.userId = action.payload.userId;
+      state.userRole = action.payload.userRole;
       state.error = null;
     });
     builder.addCase(AsyncThunks.login.rejected, (state, action) => {

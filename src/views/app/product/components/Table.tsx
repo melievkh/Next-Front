@@ -1,4 +1,7 @@
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { TableRowSelection } from 'antd/es/table/interface';
 import {
   Table as ATable,
   Button,
@@ -11,13 +14,13 @@ import {
 } from 'antd';
 import { MdOutlineEdit, MdDelete } from 'react-icons/md';
 
+import { useDeleteProductMutation } from '@/services/productService';
+import { ProductInfoModal } from '@/components/modals';
+import { getUserRole } from '@/common/store/selectors';
 import { Product } from '@/common/types/product.type';
 import { FilterOptions } from '../Products';
-import { TableRowSelection } from 'antd/es/table/interface';
-import { useDeleteProductMutation } from '@/services/productService';
-import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '@/router/routes';
-import { ProductInfoModal } from '@/components/modals';
+import { UserRole } from '@/common/types/user.type';
 
 interface DataType {
   key: React.Key;
@@ -43,6 +46,7 @@ const Table = ({ data, isLoading, filters, setFilters }: Props) => {
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
   const [deleteProduct, { isLoading: isDeleteLoading }] =
     useDeleteProductMutation();
+  const userRole = useSelector(getUserRole);
 
   const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
     setSelectedRowKeys(newSelectedRowKeys);
@@ -146,9 +150,11 @@ const Table = ({ data, isLoading, filters, setFilters }: Props) => {
     },
   ];
 
+  const isSuperAdmin = userRole === UserRole.SUPER_ADMIN;
+
   return (
     <Row className="gap-2">
-      {selectedRowKeys.length > 0 && (
+      {selectedRowKeys.length > 0 && isSuperAdmin && (
         <Row className="gap-3">
           {selectedRowKeys.length === 1 && (
             <Button

@@ -6,6 +6,7 @@ export interface SignInFormValues {
 export interface LoginResponse {
   accessToken: string;
   userId: string;
+  userRole: UserRole;
 }
 
 export interface RegisterResponse {
@@ -23,9 +24,16 @@ export interface RegisterParams {
   password: string;
 }
 
+export enum UserRole {
+  SUPER_ADMIN = 'super_admin',
+  ADMIN = 'admin',
+  USER = 'user',
+}
+
 export interface AuthState {
   isLoggedIn: boolean;
   userId: string | null;
+  userRole: UserRole | null;
   error: any;
   pending: boolean;
 }
