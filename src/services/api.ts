@@ -31,7 +31,7 @@ const baseQueryWithReauth = async (args: any, api: any, extraOptions: any) => {
 
   if (error && error.status === 'FETCH_ERROR') {
     notification.error({
-      message: 'Internal Server Error!',
+      message: 'Please, check your connection!',
     });
   }
 

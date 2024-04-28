@@ -11,7 +11,6 @@ export interface Order {
   status: OrderStatus;
   quantity: number;
   size: string;
-  price: number;
   color: string;
   created_at: string;
   order_by: {

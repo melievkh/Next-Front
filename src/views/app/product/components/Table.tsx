@@ -17,6 +17,7 @@ import { TableRowSelection } from 'antd/es/table/interface';
 import { useDeleteProductMutation } from '@/services/productService';
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '@/router/routes';
+import { ProductInfoModal } from '@/components/modals';
 
 interface DataType {
   key: React.Key;
@@ -37,6 +38,8 @@ type Props = {
 
 const Table = ({ data, isLoading, filters, setFilters }: Props) => {
   const navigate = useNavigate();
+  const [productInfoVisible, setProductInfoVisible] = useState<boolean>(false);
+  const [selectedRecord, setSelectedRecord] = useState<Product | null>(null);
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
   const [deleteProduct, { isLoading: isDeleteLoading }] =
     useDeleteProductMutation();
@@ -64,6 +67,11 @@ const Table = ({ data, isLoading, filters, setFilters }: Props) => {
   const rowSelection: TableRowSelection<DataType> = {
     selectedRowKeys,
     onChange: onSelectChange,
+  };
+
+  const handleRowClick = (record: Product) => {
+    setSelectedRecord(record);
+    setProductInfoVisible(true);
   };
 
   const columns: TableProps<any>['columns'] = [
@@ -180,12 +188,21 @@ const Table = ({ data, isLoading, filters, setFilters }: Props) => {
         dataSource={data?.result}
         loading={isLoading}
         rowSelection={rowSelection}
+        onRow={(record) => ({
+          onClick: () => handleRowClick(record),
+        })}
         pagination={{
           total: data?.count,
           current: filters.page,
           pageSize: filters.limit,
           onChange: (page) => setFilter({ name: 'page', value: page }),
         }}
+      />
+
+      <ProductInfoModal
+        visible={productInfoVisible}
+        setVisible={setProductInfoVisible}
+        product={selectedRecord}
       />
     </Row>
   );

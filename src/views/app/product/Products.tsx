@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Button, Flex, Input, Typography } from 'antd';
 import { CiSearch, CiCirclePlus } from 'react-icons/ci';
 
@@ -10,7 +11,6 @@ import {
 } from '@/common/types/product.type';
 import Table from './components/Table';
 import { FilterProducts } from '@/components/modals';
-import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '@/router/routes';
 
 export interface FilterOptions {

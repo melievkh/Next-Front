@@ -1,72 +1,132 @@
-import { Divider, Tabs, Typography } from 'antd';
+import { Flex, Input, Tabs, Typography } from 'antd';
 import { useGetOrdersQuery } from '@/services/orderService';
 import OrderTable from './components/OrderTable';
 import { useState } from 'react';
 import { OrderStatus } from '@/common/types/order.type';
+import { CiSearch } from 'react-icons/ci';
+
+export interface FilterOptions {
+  limit: number;
+  page: number;
+  status: OrderStatus | null;
+  order_number: string;
+}
 
 const Orders = () => {
-  const [filters, setFilters] = useState({
+  const [filters, setFilters] = useState<FilterOptions>({
     limit: 20,
     page: 1,
-    status: OrderStatus.PENDING,
+    status: null,
+    order_number: '',
   });
-
   const { data, isFetching } = useGetOrdersQuery(filters);
-  console.log(isFetching);
 
   const onChange = (key: string) => {
     switch (key) {
       case '1':
-        setFilters({ ...filters, status: OrderStatus.PENDING });
+        setFilters({ ...filters, status: null });
         break;
       case '2':
-        setFilters({ ...filters, status: OrderStatus.CONFIRMED });
+        setFilters({ ...filters, status: OrderStatus.PENDING });
         break;
       case '3':
-        setFilters({ ...filters, status: OrderStatus.COMPLETED });
+        setFilters({ ...filters, status: OrderStatus.CONFIRMED });
         break;
       case '4':
+        setFilters({ ...filters, status: OrderStatus.COMPLETED });
+        break;
+      case '5':
         setFilters({ ...filters, status: OrderStatus.CANCELLED });
         break;
       default:
-        setFilters({ ...filters, status: OrderStatus.PENDING });
+        setFilters({ ...filters, status: null });
     }
+  };
+
+  const handleOrderNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFilters({ ...filters, order_number: e.target.value });
   };
 
   return (
     <div>
       <Typography.Title level={2}>Orders</Typography.Title>
+      <Flex justify="flex-end">
+        <Input
+          placeholder="Search by order number"
+          onChange={handleOrderNumberChange}
+          prefix={<CiSearch size={20} />}
+          style={{ width: '300px' }}
+          size="large"
+        />
+      </Flex>
       <Tabs
         defaultActiveKey={'1'}
         onChange={onChange}
         size="large"
         items={[
           {
-            label: 'Active orders',
+            label: 'All',
             key: '1',
             children: (
-              <OrderTable orderData={data?.result} isLoading={isFetching} />
+              <OrderTable
+                orderData={data?.result}
+                dataCount={data?.count}
+                isLoading={isFetching}
+                filters={filters}
+                setFilters={setFilters}
+              />
+            ),
+          },
+          {
+            label: 'Active',
+            key: '2',
+            children: (
+              <OrderTable
+                orderData={data?.result}
+                dataCount={data?.count}
+                isLoading={isFetching}
+                filters={filters}
+                setFilters={setFilters}
+              />
             ),
           },
           {
             label: 'Delivering',
-            key: '2',
+            key: '3',
             children: (
-              <OrderTable orderData={data?.result} isLoading={isFetching} />
+              <OrderTable
+                orderData={data?.result}
+                dataCount={data?.count}
+                isLoading={isFetching}
+                filters={filters}
+                setFilters={setFilters}
+              />
             ),
           },
           {
             label: 'Completed',
-            key: '3',
+            key: '4',
             children: (
-              <OrderTable orderData={data?.result} isLoading={isFetching} />
+              <OrderTable
+                orderData={data?.result}
+                dataCount={data?.count}
+                isLoading={isFetching}
+                filters={filters}
+                setFilters={setFilters}
+              />
             ),
           },
           {
             label: 'Cancelled',
-            key: '4',
+            key: '5',
             children: (
-              <OrderTable orderData={data?.result} isLoading={isFetching} />
+              <OrderTable
+                orderData={data?.result}
+                dataCount={data?.count}
+                isLoading={isFetching}
+                filters={filters}
+                setFilters={setFilters}
+              />
             ),
           },
         ]}

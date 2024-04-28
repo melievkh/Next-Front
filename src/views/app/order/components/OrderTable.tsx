@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Button, Flex, Table, TableProps, Tag } from 'antd';
 import { Order, OrderStatus } from '@/common/types/order.type';
 import {
   useCancelOrderMutation,
@@ -12,11 +13,23 @@ import {
   getButtonDisabled,
   getOrderStatusColor,
 } from '@/utils/order.utils';
-import { Button, Flex, Table, TableProps, Tag } from 'antd';
+import { FilterOptions } from '../Orders';
 
-type Props = { orderData: Order[]; isLoading: boolean };
+type Props = {
+  orderData: Order[];
+  dataCount: number;
+  isLoading: boolean;
+  filters: FilterOptions;
+  setFilters: React.Dispatch<React.SetStateAction<FilterOptions>>;
+};
 
-const OrderTable = ({ orderData, isLoading }: Props) => {
+const OrderTable = ({
+  orderData,
+  dataCount,
+  isLoading,
+  filters,
+  setFilters,
+}: Props) => {
   const [confirmingOrder, setConfirmingOrder] = useState<string | null>(null);
   const [completingOrder, setCompletingOrder] = useState<string | null>(null);
   const [cancellingOrder, setCancellingOrder] = useState<string | null>(null);
@@ -68,15 +81,9 @@ const OrderTable = ({ orderData, isLoading }: Props) => {
     },
     {
       title: 'Price',
-      dataIndex: 'price',
-      key: 'price',
-      render: (price: any) => <a>{price} sum</a>,
-    },
-    {
-      title: 'Created',
-      dataIndex: 'created_at',
-      key: 'created_at',
-      render: (created: string) => <a>{getFormattedDate(created)}</a>,
+      dataIndex: 'product',
+      key: 'product',
+      render: (product: any) => <a>{product.price} sum</a>,
     },
     {
       title: 'Order actions',
@@ -116,6 +123,12 @@ const OrderTable = ({ orderData, isLoading }: Props) => {
       key: 'deliver',
       render: (deliver?: any) => <a>{deliver?.phone_number}</a>,
     },
+    {
+      title: 'Created',
+      dataIndex: 'created_at',
+      key: 'created_at',
+      render: (created: string) => <a>{getFormattedDate(created)}</a>,
+    },
   ];
 
   return (
@@ -126,6 +139,14 @@ const OrderTable = ({ orderData, isLoading }: Props) => {
         columns={columns}
         dataSource={orderData}
         loading={isLoading}
+        pagination={{
+          total: dataCount,
+          current: filters.page,
+          pageSize: filters.limit,
+          onChange: (page: number) => {
+            setFilters({ ...filters, page });
+          },
+        }}
       />
     </Flex>
   );
