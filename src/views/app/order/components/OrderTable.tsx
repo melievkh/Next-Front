@@ -14,6 +14,7 @@ import {
   getOrderStatusColor,
 } from '@/utils/order.utils';
 import { FilterOptions } from '../Orders';
+import { OrderInfoModal } from '@/components/modals';
 
 type Props = {
   orderData: Order[];
@@ -30,6 +31,8 @@ const OrderTable = ({
   filters,
   setFilters,
 }: Props) => {
+  const [orderInfoVisible, setOrderInfoVisible] = useState<boolean>(false);
+  const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
   const [confirmingOrder, setConfirmingOrder] = useState<string | null>(null);
   const [completingOrder, setCompletingOrder] = useState<string | null>(null);
   const [cancellingOrder, setCancellingOrder] = useState<string | null>(null);
@@ -54,6 +57,11 @@ const OrderTable = ({
     setCancellingOrder(id);
     await cancelOrder(id);
     setCancellingOrder(null);
+  };
+
+  const handleRowClick = (record: Order) => {
+    setSelectedOrder(record);
+    setOrderInfoVisible(true);
   };
 
   const columns: TableProps<Order>['columns'] = [
@@ -139,6 +147,9 @@ const OrderTable = ({
         columns={columns}
         dataSource={orderData}
         loading={isLoading}
+        onRow={(record: Order) => ({
+          onClick: () => handleRowClick(record),
+        })}
         pagination={{
           total: dataCount,
           current: filters.page,
@@ -147,6 +158,12 @@ const OrderTable = ({
             setFilters({ ...filters, page });
           },
         }}
+      />
+
+      <OrderInfoModal
+        visible={orderInfoVisible}
+        setVisible={setOrderInfoVisible}
+        order={selectedOrder}
       />
     </Flex>
   );

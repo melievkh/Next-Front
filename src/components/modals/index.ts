@@ -1,4 +1,5 @@
 import FilterProducts from './FilterProducts';
+import OrderInfoModal from './OrderInfo';
 import ProductInfoModal from './ProductInfo';
 
-export { FilterProducts, ProductInfoModal };
+export { FilterProducts, OrderInfoModal, ProductInfoModal };

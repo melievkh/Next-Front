@@ -17,9 +17,15 @@ export interface Order {
     _id: string;
     phone_number: string;
   };
+  deliver: {
+    _id: string;
+    phone_number: string;
+  };
   product: {
     _id: string;
     code: string;
     price: number;
+    title: string;
+    brand: string;
   };
 }
