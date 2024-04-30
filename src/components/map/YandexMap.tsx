@@ -1,18 +1,26 @@
 import { useEffect, useRef } from 'react';
 
-const YandexMap = () => {
-  const mapContainer = useRef<HTMLDivElement | null>(null);
+type Props = {
+  latitude?: number;
+  longitude?: number;
+};
 
+const YandexMap = ({ latitude, longitude }: Props) => {
+  const mapContainer = useRef<HTMLDivElement | null>(null);
+  const latitude_address = latitude || 55.751574;
+  const longitude_address = longitude || 37.573856;
+
+  console.log(longitude, latitude);
   useEffect(() => {
     if (!mapContainer.current) return;
 
     const map = new window.ymaps.Map(mapContainer.current, {
-      center: [55.751574, 37.573856],
+      center: [latitude_address, longitude_address],
       zoom: 13,
     });
 
     const placemark = new window.ymaps.Placemark(
-      [55.751574, 37.573856],
+      [latitude_address, longitude_address],
       {
         hintContent: 'Order address',
         preset: 'isl`ands`#icon',
@@ -28,7 +36,7 @@ const YandexMap = () => {
         map.destroy();
       }
     };
-  }, []);
+  }, [latitude_address, longitude_address]);
 
   return (
     <div

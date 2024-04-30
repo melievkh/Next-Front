@@ -13,6 +13,9 @@ export interface Order {
   size: string;
   color: string;
   created_at: string;
+  address: string;
+  address_longitude: number;
+  address_latitude: number;
   order_by: {
     _id: string;
     phone_number: string;

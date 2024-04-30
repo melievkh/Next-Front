@@ -1,5 +1,5 @@
 import { Order } from '@/common/types/order.type';
-import { Button, Modal, Tag, Typography } from 'antd';
+import { Modal, Tag, Typography } from 'antd';
 import YandexMap from '../map/YandexMap';
 
 type Props = {
@@ -30,13 +30,7 @@ const OrderInfoModal = ({ order, visible, setVisible }: Props) => {
             </p>
             <p className="flex gap-1 items-center font-mono">
               <strong>Color: </strong>
-              <Button
-                style={{ backgroundColor: order?.color }}
-                type="primary"
-                shape="circle"
-                size="small"
-              />
-              ({order?.color})
+              <span></span>({order?.color})
             </p>
 
             <p className="font-mono">
@@ -67,12 +61,15 @@ const OrderInfoModal = ({ order, visible, setVisible }: Props) => {
             </p>
             <p className="font-mono">
               <strong>Address: </strong>
-              <Tag>{order?.status}</Tag>
+              <Tag>{order?.address}</Tag>
             </p>
           </div>
         </div>
 
-        <YandexMap />
+        <YandexMap
+          latitude={order?.address_latitude}
+          longitude={order?.address_longitude}
+        />
       </div>
     </Modal>
   );

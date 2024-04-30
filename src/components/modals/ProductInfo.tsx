@@ -48,7 +48,9 @@ const ProductInfoModal = ({ product, visible, setVisible }: Props) => {
 
           <div className="flex flex-col gap-2">
             <h2 className="font-sans text-[#7d7d7d]">Sizes</h2>
-            <ul>{product?.sizes.map((size) => <Tag>{size}</Tag>)}</ul>
+            <ul>
+              {product?.sizes.map((size) => <Tag key={size}>{size}</Tag>)}
+            </ul>
           </div>
         </div>
       </Flex>

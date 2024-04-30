@@ -94,6 +94,11 @@ const OrderTable = ({
       render: (product: any) => <a>{product.price} sum</a>,
     },
     {
+      title: 'Address',
+      dataIndex: 'address',
+      key: 'address',
+    },
+    {
       title: 'Order actions',
       dataIndex: 'status',
       key: 'status',

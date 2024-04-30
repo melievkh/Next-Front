@@ -194,6 +194,7 @@ const Table = ({ data, isLoading, filters, setFilters }: Props) => {
         dataSource={data?.result}
         loading={isLoading}
         rowSelection={rowSelection}
+        style={{ width: '100%' }}
         onRow={(record) => ({
           onClick: () => handleRowClick(record),
         })}
