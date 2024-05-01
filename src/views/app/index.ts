@@ -1,8 +1,8 @@
 import Auth from '../auth/Auth';
-import CreateProduct from './product/CreateProduct';
-import EditProduct from './product/EditProduct';
+import CreateOutfit from './outfit/CreateOutfit';
+import EditOutfit from './outfit/EditOutfit';
 import Home from './Home/Home';
 import Orders from './order/Orders';
-import Products from './product/Products';
+import Outfits from './outfit/Outfits';
 
-export { Auth, CreateProduct, EditProduct, Home, Orders, Products };
+export { Auth, CreateOutfit, EditOutfit, Home, Orders, Outfits };

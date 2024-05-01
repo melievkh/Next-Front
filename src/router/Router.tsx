@@ -3,11 +3,11 @@ import { useSelector } from 'react-redux';
 
 import {
   Auth,
-  CreateProduct,
-  EditProduct,
+  CreateOutfit,
+  EditOutfit,
   Home,
   Orders,
-  Products,
+  Outfits,
 } from '@/views/app';
 import { AppLayout } from '@/components/layout';
 import { getIsLoggedIn } from '@/common/store/selectors';
@@ -20,12 +20,12 @@ const AppRouter = () => {
     <AppLayout>
       <Routes>
         <Route index element={<Home />} />
-        <Route path={ROUTES.PRODUCTS} element={<Products />} />
-        <Route path={ROUTES.CREATE_PRODUCT} element={<CreateProduct />} />
-        <Route path={ROUTES.EDIT_PRODUCT} element={<EditProduct />} />
+        <Route path={ROUTES.OUTFITS} element={<Outfits />} />
+        <Route path={ROUTES.CREATE_OUTFIT} element={<CreateOutfit />} />
+        <Route path={ROUTES.EDIT_OUTFIT} element={<EditOutfit />} />
         <Route path={ROUTES.ORDERS} element={<Orders />} />
-        <Route path={ROUTES.USERS} element={<Products />} />
-        {/* <Route path="*" element={<Navigate to="/" />} /> */}
+        <Route path={ROUTES.USERS} element={<Outfits />} />
+        <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </AppLayout>
   ) : (

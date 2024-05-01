@@ -1,7 +1,7 @@
 import { TagTypes, api } from './api';
 import { endpoints } from './endpoints';
 
-const userService = api.injectEndpoints({
+const storeService = api.injectEndpoints({
   endpoints: (builder) => ({
     getMe: builder.query({
       query: () => endpoints.me,
@@ -10,4 +10,4 @@ const userService = api.injectEndpoints({
   }),
 });
 
-export const { useGetMeQuery } = userService;
+export const { useGetMeQuery } = storeService;

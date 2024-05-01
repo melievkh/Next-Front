@@ -20,9 +20,9 @@ const MenuContent = () => {
     {
       key: '2',
       icon: <MdOutlineProductionQuantityLimits />,
-      label: 'Products',
-      title: 'Products',
-      to: '/products',
+      label: 'Outfits',
+      title: 'Outfits',
+      to: '/outfits',
     },
     {
       key: '3',

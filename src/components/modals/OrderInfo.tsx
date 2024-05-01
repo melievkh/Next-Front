@@ -49,7 +49,7 @@ const OrderInfoModal = ({ order, visible, setVisible }: Props) => {
             </p>
             <p className="font-mono">
               <strong>Deliver by: </strong>
-              <Tag>{order?.deliver?.phone_number || 'not confirmed'}</Tag>
+              <Tag>{order?.deliver?.phone_number || 'not accepted'}</Tag>
             </p>
             <p className="font-mono">
               <strong>Quantity: </strong>

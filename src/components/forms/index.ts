@@ -1,3 +1,3 @@
-import ProductForm from './ProductForm';
+import OutfitForm from './OutfitForm';
 
-export { ProductForm };
+export { OutfitForm };

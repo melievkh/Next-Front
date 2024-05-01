@@ -1,9 +1,9 @@
-export enum ProductCategory {
+export enum OutfitCategory {
   SHOES = 'shoes',
   CLOTHES = 'clothes',
 }
 
-export enum ProductSize {
+export enum OutfitSize {
   MEDIUM = 'M',
   SMALL = 'S',
   XSMALL = 'XS',
@@ -21,7 +21,7 @@ export enum ProductSize {
   S46 = '46',
 }
 
-export enum ProductColor {
+export enum OutfitColor {
   WHITE = 'white',
   BLACK = 'black',
   RED = 'red',
@@ -33,29 +33,30 @@ export enum ProductColor {
   PURPLE = 'purple',
 }
 
-export interface Product {
-  _id: string;
+export interface Outfit {
+  id: string;
+  brand: string;
+  category: OutfitCategory;
+  colors: OutfitColor[];
+  code: string;
+  description?: string;
+  image_urls: string[];
+  image_main: string;
+  name: string;
+  price: number;
+  sizes: OutfitSize[];
+}
+
+export interface CreateOutfit {
   code: string;
   title: string;
   brand: string;
   images: string[];
   price: number;
   description?: string;
-  category: ProductCategory;
-  sizes: ProductSize[];
-  colors: ProductColor[];
+  category: OutfitCategory | string;
+  sizes: OutfitSize[];
+  colors: OutfitColor[];
 }
 
-export interface CreateProduct {
-  code: string;
-  title: string;
-  brand: string;
-  images: string[];
-  price: number;
-  description?: string;
-  category: ProductCategory | string;
-  sizes: ProductSize[];
-  colors: ProductColor[];
-}
-
-export interface UpdateProduct extends CreateProduct {}
+export interface UpdateOutfit extends CreateOutfit {}

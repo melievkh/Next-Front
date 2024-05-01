@@ -9,7 +9,7 @@ export interface FilterOptions {
   limit: number;
   page: number;
   status: OrderStatus | null;
-  order_number: string;
+  order_number: number | null;
 }
 
 const Orders = () => {
@@ -17,7 +17,7 @@ const Orders = () => {
     limit: 20,
     page: 1,
     status: null,
-    order_number: '',
+    order_number: null,
   });
   const { data, isFetching } = useGetOrdersQuery(filters);
 
@@ -30,7 +30,7 @@ const Orders = () => {
         setFilters({ ...filters, status: OrderStatus.PENDING });
         break;
       case '3':
-        setFilters({ ...filters, status: OrderStatus.CONFIRMED });
+        setFilters({ ...filters, status: OrderStatus.ACCEPTED });
         break;
       case '4':
         setFilters({ ...filters, status: OrderStatus.COMPLETED });
@@ -44,7 +44,7 @@ const Orders = () => {
   };
 
   const handleOrderNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFilters({ ...filters, order_number: e.target.value });
+    setFilters({ ...filters, order_number: Number(e.target.value) });
   };
 
   return (

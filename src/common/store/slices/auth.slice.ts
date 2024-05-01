@@ -1,11 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { AsyncThunks } from '../thunks';
 import { AuthState } from '@/common/types/auth.type';
+import { storage } from '@/config/storage.config';
 
 const initialState: AuthState = {
   isLoggedIn: false,
   userId: null,
-  userRole: null,
+  role: null,
   error: null,
   pending: false,
 };
@@ -15,6 +16,9 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     logout: () => {
+      localStorage.removeItem(storage.ACCESS_TOKEN);
+      localStorage.removeItem(storage.REFRESH_TOKEN);
+      localStorage.removeItem(storage.USER_ID);
       return initialState;
     },
   },
@@ -27,7 +31,7 @@ const authSlice = createSlice({
       state.pending = false;
       state.isLoggedIn = true;
       state.userId = action.payload.userId;
-      state.userRole = action.payload.userRole;
+      state.role = action.payload.role;
       state.error = null;
     });
     builder.addCase(AsyncThunks.login.rejected, (state, action) => {

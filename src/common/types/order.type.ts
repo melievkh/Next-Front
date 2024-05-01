@@ -1,12 +1,12 @@
 export enum OrderStatus {
   PENDING = 'pending',
-  CONFIRMED = 'confirmed',
+  ACCEPTED = 'accepted',
   COMPLETED = 'completed',
   CANCELLED = 'cancelled',
 }
 
 export interface Order {
-  _id: string;
+  id: string;
   order_number: string;
   status: OrderStatus;
   quantity: number;

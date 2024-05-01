@@ -14,15 +14,15 @@ import {
   categoryOptions,
   colorOptions,
   sizeOptions,
-} from '@/constants/product.constants';
-import { FilterOptions } from '@/views/app/product/Products';
+} from '@/constants/outfit.constants';
+import { FilterOptions } from '@/views/app/outfit/Outfits';
 
 type Props = {
   handleFilter: (values: FilterOptions) => void;
   handleClear: () => void;
 };
 
-const FilterProductsForm = ({ handleFilter, handleClear }: Props) => {
+const FilterOutfitsForm = ({ handleFilter, handleClear }: Props) => {
   const [form] = Form.useForm();
   const [visible, setVisible] = useState(false);
 
@@ -47,7 +47,7 @@ const FilterProductsForm = ({ handleFilter, handleClear }: Props) => {
       </Flex>
 
       <Modal
-        title="Filter products"
+        title="Filter outfits"
         open={visible}
         onCancel={onCancel}
         footer={null}
@@ -105,4 +105,4 @@ const FilterProductsForm = ({ handleFilter, handleClear }: Props) => {
   );
 };
 
-export default FilterProductsForm;
+export default FilterOutfitsForm;

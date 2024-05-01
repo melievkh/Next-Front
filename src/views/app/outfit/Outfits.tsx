@@ -3,27 +3,27 @@ import { useNavigate } from 'react-router-dom';
 import { Button, Flex, Input, Typography } from 'antd';
 import { CiSearch, CiCirclePlus } from 'react-icons/ci';
 
-import { useGetProductsQuery } from '@/services/productService';
+import { useGetOutfitsQuery } from '@/services/outfitService';
 import {
-  ProductCategory,
-  ProductColor,
-  ProductSize,
-} from '@/common/types/product.type';
-import Table from './components/Table';
-import { FilterProducts } from '@/components/modals';
+  OutfitCategory,
+  OutfitColor,
+  OutfitSize,
+} from '@/common/types/outfit.type';
+import { FilterOutfits } from '@/components/modals';
 import { ROUTES } from '@/router/routes';
+import Table from './components/Table';
 
 export interface FilterOptions {
   limit?: number;
   page?: number;
   code: string | null;
-  category: ProductCategory | null;
+  category: OutfitCategory | null;
   brand: string | null;
-  sizes: ProductSize[];
-  colors: ProductColor[];
+  sizes: OutfitSize[];
+  colors: OutfitColor[];
 }
 
-const Products = () => {
+const Outfits = () => {
   const [filters, setFilters] = useState<FilterOptions>({
     limit: 10,
     page: 1,
@@ -33,8 +33,10 @@ const Products = () => {
     sizes: [],
     colors: [],
   });
-  const { data, isLoading } = useGetProductsQuery(filters);
+  const { data, isLoading } = useGetOutfitsQuery({});
   const navigate = useNavigate();
+
+  console.log(data);
 
   const handleOnCodeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const inputValue = e.target.value;
@@ -62,13 +64,13 @@ const Products = () => {
       <Flex gap={10} justify="space-between">
         <Flex gap={20}>
           <Input
-            placeholder="Search for products by code"
+            placeholder="Search for outfits by code"
             onChange={handleOnCodeChange}
             prefix={<CiSearch size={20} />}
             style={{ width: '300px' }}
             size="large"
           />
-          <FilterProducts
+          <FilterOutfits
             handleFilter={handleFilter}
             handleClear={handleClear}
           />
@@ -78,7 +80,7 @@ const Products = () => {
           type="primary"
           size="large"
           className="flex items-center gap-1"
-          onClick={() => navigate(ROUTES.CREATE_PRODUCT)}
+          onClick={() => navigate(ROUTES.CREATE_OUTFIT)}
         >
           <CiCirclePlus size={22} />
           Create
@@ -95,4 +97,4 @@ const Products = () => {
   );
 };
 
-export default Products;
+export default Outfits;

@@ -4,7 +4,7 @@ const getOrderStatusColor = (status: OrderStatus) => {
   switch (status) {
     case OrderStatus.PENDING:
       return '#5e76e0';
-    case OrderStatus.CONFIRMED:
+    case OrderStatus.ACCEPTED:
       return '#3bc46b';
     case OrderStatus.COMPLETED:
       return '#50785e';
@@ -19,7 +19,7 @@ const getActionBackgroundColor = (status: OrderStatus) => {
   switch (status) {
     case OrderStatus.PENDING:
       return '#5e76e0';
-    case OrderStatus.CONFIRMED:
+    case OrderStatus.ACCEPTED:
       return '#3bc46b';
     default:
       return 'default';
@@ -29,8 +29,8 @@ const getActionBackgroundColor = (status: OrderStatus) => {
 const getActionButtonName = (status: OrderStatus) => {
   switch (status) {
     case OrderStatus.PENDING:
-      return 'Confirm';
-    case OrderStatus.CONFIRMED:
+      return 'Accept';
+    case OrderStatus.ACCEPTED:
       return 'Complete';
     case OrderStatus.COMPLETED:
       return 'Completed';
@@ -43,7 +43,7 @@ const getActionButtonName = (status: OrderStatus) => {
 
 const getButtonDisabled = (status: OrderStatus) => {
   switch (status) {
-    case OrderStatus.CONFIRMED:
+    case OrderStatus.ACCEPTED:
       return false;
     case OrderStatus.COMPLETED:
       return true;

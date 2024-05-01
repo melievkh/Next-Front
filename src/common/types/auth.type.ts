@@ -3,15 +3,15 @@ export interface SignInFormValues {
   password: string;
 }
 
-export interface LoginResponse {
+export interface Tokens {
   accessToken: string;
-  userId: string;
-  userRole: UserRole;
+  refreshToken: string;
 }
 
-export interface RegisterResponse {
-  message: string;
-  success: boolean;
+export interface LoginResponse {
+  tokens: Tokens;
+  userId: string;
+  role: Role;
 }
 
 export interface LoginParams {
@@ -19,21 +19,15 @@ export interface LoginParams {
   password: string;
 }
 
-export interface RegisterParams {
-  email: string;
-  password: string;
-}
-
-export enum UserRole {
-  SUPER_ADMIN = 'super_admin',
+export enum Role {
   ADMIN = 'admin',
-  USER = 'user',
+  STORE = 'store',
 }
 
 export interface AuthState {
   isLoggedIn: boolean;
   userId: string | null;
-  userRole: UserRole | null;
+  role: Role | null;
   error: any;
   pending: boolean;
 }

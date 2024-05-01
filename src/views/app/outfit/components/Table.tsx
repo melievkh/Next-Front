@@ -14,13 +14,13 @@ import {
 } from 'antd';
 import { MdOutlineEdit, MdDelete } from 'react-icons/md';
 
-import { useDeleteProductMutation } from '@/services/productService';
-import { ProductInfoModal } from '@/components/modals';
 import { getUserRole } from '@/common/store/selectors';
-import { Product } from '@/common/types/product.type';
-import { FilterOptions } from '../Products';
 import { ROUTES } from '@/router/routes';
-import { UserRole } from '@/common/types/user.type';
+import { Role } from '@/common/types/auth.type';
+import { Outfit } from '@/common/types/outfit.type';
+import { FilterOptions } from '../Outfits';
+import { useDeleteOutfitMutation } from '@/services/outfitService';
+import { OutfitInfoModal } from '@/components/modals';
 
 interface DataType {
   key: React.Key;
@@ -31,7 +31,7 @@ interface DataType {
 
 type Props = {
   data: {
-    result: Product[];
+    result: Outfit[];
     count: number;
   };
   isLoading: boolean;
@@ -41,11 +41,11 @@ type Props = {
 
 const Table = ({ data, isLoading, filters, setFilters }: Props) => {
   const navigate = useNavigate();
-  const [productInfoVisible, setProductInfoVisible] = useState<boolean>(false);
-  const [selectedRecord, setSelectedRecord] = useState<Product | null>(null);
+  const [outfitInfoVisible, setOutfitInfoVisible] = useState<boolean>(false);
+  const [selectedRecord, setSelectedRecord] = useState<Outfit | null>(null);
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
-  const [deleteProduct, { isLoading: isDeleteLoading }] =
-    useDeleteProductMutation();
+  const [deleteOutfit, { isLoading: isDeleteLoading }] =
+    useDeleteOutfitMutation();
   const userRole = useSelector(getUserRole);
 
   const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
@@ -59,8 +59,8 @@ const Table = ({ data, isLoading, filters, setFilters }: Props) => {
     }));
   };
 
-  const handleDeleteProduct = async () => {
-    await deleteProduct(selectedRowKeys)
+  const handleDeleteOutfit = async () => {
+    await deleteOutfit(selectedRowKeys)
       .then(() => {
         message.success('Deleted successfully');
       })
@@ -73,9 +73,9 @@ const Table = ({ data, isLoading, filters, setFilters }: Props) => {
     onChange: onSelectChange,
   };
 
-  const handleRowClick = (record: Product) => {
+  const handleRowClick = (record: Outfit) => {
     setSelectedRecord(record);
-    setProductInfoVisible(true);
+    setOutfitInfoVisible(true);
   };
 
   const columns: TableProps<any>['columns'] = [
@@ -87,8 +87,8 @@ const Table = ({ data, isLoading, filters, setFilters }: Props) => {
     },
     {
       title: 'Image',
-      dataIndex: 'images',
-      key: 'images',
+      dataIndex: 'image_urls',
+      key: 'image_urls',
       render: (images) => {
         return (
           <Image.PreviewGroup items={images}>
@@ -98,9 +98,9 @@ const Table = ({ data, isLoading, filters, setFilters }: Props) => {
       },
     },
     {
-      title: 'Title',
-      dataIndex: 'title',
-      key: 'title',
+      title: 'Name',
+      dataIndex: 'name',
+      key: 'name',
     },
     {
       title: 'Category',
@@ -150,18 +150,18 @@ const Table = ({ data, isLoading, filters, setFilters }: Props) => {
     },
   ];
 
-  const isSuperAdmin = userRole === UserRole.SUPER_ADMIN;
+  const isAdmin = userRole === Role.ADMIN;
 
   return (
     <Row className="gap-2">
-      {selectedRowKeys.length > 0 && isSuperAdmin && (
+      {selectedRowKeys.length > 0 && isAdmin && (
         <Row className="gap-3">
           {selectedRowKeys.length === 1 && (
             <Button
               className="flex gap-2 items-center"
               onClick={() => {
-                navigate(ROUTES.EDIT_PRODUCT, {
-                  state: { productId: selectedRowKeys[0] },
+                navigate(ROUTES.EDIT_OUTFIT, {
+                  state: { outfitId: selectedRowKeys[0] },
                 });
               }}
             >
@@ -174,7 +174,7 @@ const Table = ({ data, isLoading, filters, setFilters }: Props) => {
             okText="Sure, delete"
             okType="danger"
             cancelText="Cancel"
-            onConfirm={handleDeleteProduct}
+            onConfirm={handleDeleteOutfit}
           >
             <Button
               danger
@@ -206,10 +206,10 @@ const Table = ({ data, isLoading, filters, setFilters }: Props) => {
         }}
       />
 
-      <ProductInfoModal
-        visible={productInfoVisible}
-        setVisible={setProductInfoVisible}
-        product={selectedRecord}
+      <OutfitInfoModal
+        visible={outfitInfoVisible}
+        setVisible={setOutfitInfoVisible}
+        outfit={selectedRecord}
       />
     </Row>
   );

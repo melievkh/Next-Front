@@ -1,13 +1,13 @@
-import { Product } from '@/common/types/product.type';
 import { Button, Flex, Image, Modal, Tag } from 'antd';
+import { Outfit } from '@/common/types/outfit.type';
 
 type Props = {
-  product: Product | null;
+  outfit: Outfit | null;
   visible: boolean;
   setVisible: React.Dispatch<React.SetStateAction<any>>;
 };
 
-const ProductInfoModal = ({ product, visible, setVisible }: Props) => {
+const outfitInfoModal = ({ outfit, visible, setVisible }: Props) => {
   const onCancel = () => {
     setVisible(false);
   };
@@ -15,26 +15,26 @@ const ProductInfoModal = ({ product, visible, setVisible }: Props) => {
   return (
     <Modal open={visible} onCancel={onCancel} footer={null} width={600}>
       <Flex gap={20}>
-        <Image.PreviewGroup items={product?.images}>
+        <Image.PreviewGroup items={outfit?.image_urls}>
           <Image
             height={300}
             style={{ borderRadius: 4 }}
-            src={product?.images[0]}
+            src={outfit?.image_main}
           />
         </Image.PreviewGroup>
         <div className="flex flex-col gap-4">
           <div>
             <h1 className="text-2xl font-bold text-[#474747] font-serif">
-              {product?.title}
+              {outfit?.name}
             </h1>
-            <p>code: {product?.code}</p>
-            <p>{product?.description}</p>
+            <p>code: {outfit?.code}</p>
+            <p>{outfit?.description}</p>
           </div>
 
           <div className="flex flex-col">
             <h2 className="font-sans text-[#7d7d7d]">Colors</h2>
             <ul className="flex gap-2">
-              {product?.colors.map((color) => (
+              {outfit?.colors.map((color) => (
                 <Button
                   key={color}
                   style={{ backgroundColor: color }}
@@ -48,9 +48,7 @@ const ProductInfoModal = ({ product, visible, setVisible }: Props) => {
 
           <div className="flex flex-col gap-2">
             <h2 className="font-sans text-[#7d7d7d]">Sizes</h2>
-            <ul>
-              {product?.sizes.map((size) => <Tag key={size}>{size}</Tag>)}
-            </ul>
+            <ul>{outfit?.sizes.map((size) => <Tag key={size}>{size}</Tag>)}</ul>
           </div>
         </div>
       </Flex>
@@ -58,4 +56,4 @@ const ProductInfoModal = ({ product, visible, setVisible }: Props) => {
   );
 };
 
-export default ProductInfoModal;
+export default outfitInfoModal;

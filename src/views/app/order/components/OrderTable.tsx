@@ -4,7 +4,7 @@ import { Order, OrderStatus } from '@/common/types/order.type';
 import {
   useCancelOrderMutation,
   useCompleteOrderMutation,
-  useConfirmOrderMutation,
+  useAcceptOrderMutation,
 } from '@/services/orderService';
 import { getFormattedDate } from '@/utils/date';
 import {
@@ -33,20 +33,20 @@ const OrderTable = ({
 }: Props) => {
   const [orderInfoVisible, setOrderInfoVisible] = useState<boolean>(false);
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
-  const [confirmingOrder, setConfirmingOrder] = useState<string | null>(null);
+  const [acceptingOrder, setAcceptingOrder] = useState<string | null>(null);
   const [completingOrder, setCompletingOrder] = useState<string | null>(null);
   const [cancellingOrder, setCancellingOrder] = useState<string | null>(null);
 
-  const [confirmOrder] = useConfirmOrderMutation();
+  const [acceptOrder] = useAcceptOrderMutation();
   const [completeOrder] = useCompleteOrderMutation();
   const [cancelOrder] = useCancelOrderMutation();
 
   const handleSubmitOrder = async (id: string, status: OrderStatus) => {
     if (status === OrderStatus.PENDING) {
-      setConfirmingOrder(id);
-      await confirmOrder(id);
-      setConfirmingOrder(null);
-    } else if (status === OrderStatus.CONFIRMED) {
+      setAcceptingOrder(id);
+      await acceptOrder(id);
+      setAcceptingOrder(null);
+    } else if (status === OrderStatus.ACCEPTED) {
       setCompletingOrder(id);
       await completeOrder(id);
       setCompletingOrder(null);
@@ -104,10 +104,10 @@ const OrderTable = ({
       key: 'status',
       render: (status: OrderStatus, record: Order) => (
         <Flex gap={10}>
-          {status === OrderStatus.CONFIRMED && (
+          {status === OrderStatus.ACCEPTED && (
             <Button
-              onClick={() => handleCancelOrder(record._id)}
-              loading={cancellingOrder === record._id}
+              onClick={() => handleCancelOrder(record.id)}
+              loading={cancellingOrder === record.id}
               size="small"
               danger
             >
@@ -119,9 +119,9 @@ const OrderTable = ({
             size="small"
             type="primary"
             disabled={getButtonDisabled(status)}
-            onClick={() => handleSubmitOrder(record._id, status)}
+            onClick={() => handleSubmitOrder(record.id, status)}
             loading={
-              confirmingOrder === record._id || completingOrder === record._id
+              acceptingOrder === record.id || completingOrder === record.id
             }
             style={{ backgroundColor: getActionBackgroundColor(status) }}
           >
@@ -148,7 +148,7 @@ const OrderTable = ({
     <Flex>
       <Table
         style={{ width: '100%' }}
-        rowKey="_id"
+        rowKey="id"
         columns={columns}
         dataSource={orderData}
         loading={isLoading}

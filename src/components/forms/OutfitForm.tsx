@@ -1,63 +1,31 @@
-import {
-  Form,
-  Input,
-  Select,
-  Row,
-  Col,
-  Button,
-  Typography,
-  Flex,
-  message,
-} from 'antd';
+import { Form, Input, Select, Row, Col, Button, Typography, Flex } from 'antd';
 import {
   categoryOptions,
   colorOptions,
   sizeOptions,
-} from '@/constants/product.constants';
-import { Product } from '@/common/types/product.type';
+} from '@/constants/outfit.constants';
 import {
-  useCreateProductMutation,
-  useUpdateProductMutation,
-} from '@/services/productService';
+  useCreateOutfitMutation,
+  useUpdateOutfitMutation,
+} from '@/services/outfitService';
+import { Outfit } from '@/common/types/outfit.type';
 
-type Props = { mode: string; productData?: Product };
+type Props = { mode: string; outfitData?: Outfit };
 
-const ProductForm = ({ mode, productData }: Props) => {
+const OutfitForm = ({ mode, outfitData }: Props) => {
   const [form] = Form.useForm();
-  const [updateProduct, { isLoading: isUpdateLoading }] =
-    useUpdateProductMutation();
-  const [createProduct, { isLoading: isCreateLoading }] =
-    useCreateProductMutation();
+  const [updateOutfit, { isLoading: isUpdateLoading }] =
+    useUpdateOutfitMutation();
+  const [createOutfit, { isLoading: isCreateLoading }] =
+    useCreateOutfitMutation();
 
   const isEditMode = mode === 'EDIT';
   if (isEditMode) {
-    form.setFieldsValue(productData);
+    form.setFieldsValue(outfitData);
   }
 
   const handleFormSubmit = async (values: any) => {
-    try {
-      if (isEditMode) {
-        await updateProduct({
-          _id: productData?._id,
-          ...values,
-        }).unwrap();
-        message.success('Product updated successfully');
-      } else {
-        const imagesArray = values.images
-          .split(',')
-          .map((url: string) => url.trim());
-
-        const productToCreate = {
-          ...values,
-          price: Number(values.price),
-          images: imagesArray,
-        };
-        await createProduct(productToCreate).unwrap();
-        message.success('Product created successfully');
-      }
-    } catch (error) {
-      console.log(error);
-    }
+    console.log(values);
   };
 
   return (
@@ -129,8 +97,8 @@ const ProductForm = ({ mode, productData }: Props) => {
 
       <Row gutter={16}>
         <Col span={24}>
-          <Form.Item label="Title" name="title" rules={[{ required: true }]}>
-            <Input placeholder="Enter title" name="title" />
+          <Form.Item label="Title" name="name" rules={[{ required: true }]}>
+            <Input placeholder="Enter title" name="name" />
           </Form.Item>
         </Col>
       </Row>
@@ -168,11 +136,11 @@ const ProductForm = ({ mode, productData }: Props) => {
           type="primary"
           htmlType="submit"
         >
-          {isEditMode ? 'Update Product' : 'Create Product'}
+          {isEditMode ? 'Update Outfit' : 'Create Outfit'}
         </Button>
       </Form.Item>
     </Form>
   );
 };
 
-export default ProductForm;
+export default OutfitForm;

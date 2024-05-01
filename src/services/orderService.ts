@@ -14,9 +14,9 @@ const orderService = api.injectEndpoints({
         })}`,
       providesTags: [TagTypes.GET_ORDERS],
     }),
-    confirmOrder: builder.mutation({
+    acceptOrder: builder.mutation({
       query: (id) => ({
-        url: endpoints.orderConfirm(id),
+        url: endpoints.orderAccept(id),
         method: 'PATCH',
       }),
       invalidatesTags: [TagTypes.GET_ORDERS],
@@ -40,7 +40,7 @@ const orderService = api.injectEndpoints({
 
 export const {
   useGetOrdersQuery,
-  useConfirmOrderMutation,
+  useAcceptOrderMutation,
   useCompleteOrderMutation,
   useCancelOrderMutation,
 } = orderService;
