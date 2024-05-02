@@ -1,6 +1,10 @@
 const categoryOptions = [
+  { value: 'cap', label: 'Caps' },
+  { value: 'pants', label: 'Pants' },
   { value: 'shoes', label: 'Shoes' },
-  { value: 'clothes', label: 'Clothes' },
+  { value: 'sneakers', label: 'Sneakers' },
+  { value: 't_shirts', label: 'T-Shirts' },
+  { value: 'other', label: 'Other' },
 ];
 
 const sizeOptions = [

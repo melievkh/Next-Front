@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Button, Flex, Input, Typography } from 'antd';
+import { Button, Flex, Input, Tabs, Typography } from 'antd';
 import { CiSearch, CiCirclePlus } from 'react-icons/ci';
 
 import { useGetOutfitsQuery } from '@/services/outfitService';
@@ -36,8 +36,6 @@ const Outfits = () => {
   const { data, isLoading } = useGetOutfitsQuery({});
   const navigate = useNavigate();
 
-  console.log(data);
-
   const handleOnCodeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const inputValue = e.target.value;
     setFilters({ ...filters, code: inputValue });
@@ -56,6 +54,34 @@ const Outfits = () => {
       sizes: [],
       colors: [],
     });
+  };
+
+  const onChange = (key: string) => {
+    switch (key) {
+      case 'all':
+        setFilters({ ...filters, category: null });
+        break;
+      case 'shoes':
+        setFilters({ ...filters, category: OutfitCategory.SHOES });
+        break;
+      case 'sneakers':
+        setFilters({ ...filters, category: OutfitCategory.SNEAKERS });
+        break;
+      case 't_shirts':
+        setFilters({ ...filters, category: OutfitCategory.T_SHIRTS });
+        break;
+      case 'pants':
+        setFilters({ ...filters, category: OutfitCategory.PANTS });
+        break;
+      case 'caps':
+        setFilters({ ...filters, category: OutfitCategory.CAPS });
+        break;
+      case 'other':
+        setFilters({ ...filters, category: OutfitCategory.OTHER });
+        break;
+      default:
+        setFilters({ ...filters, category: null });
+    }
   };
 
   return (
@@ -87,11 +113,97 @@ const Outfits = () => {
         </Button>
       </Flex>
 
-      <Table
-        data={data}
-        isLoading={isLoading}
-        filters={filters}
-        setFilters={setFilters}
+      <Tabs
+        defaultActiveKey={'1'}
+        onChange={onChange}
+        size="large"
+        style={{ width: '100%' }}
+        items={[
+          {
+            label: 'All',
+            key: 'all',
+            children: (
+              <Table
+                data={data}
+                isLoading={isLoading}
+                filters={filters}
+                setFilters={setFilters}
+              />
+            ),
+          },
+          {
+            label: 'Shoes',
+            key: 'shoes',
+            children: (
+              <Table
+                data={data}
+                isLoading={isLoading}
+                filters={filters}
+                setFilters={setFilters}
+              />
+            ),
+          },
+          {
+            label: 'Sneakers',
+            key: 'sneakers',
+            children: (
+              <Table
+                data={data}
+                isLoading={isLoading}
+                filters={filters}
+                setFilters={setFilters}
+              />
+            ),
+          },
+          {
+            label: 'T-Shirts',
+            key: 't_shirts',
+            children: (
+              <Table
+                data={data}
+                isLoading={isLoading}
+                filters={filters}
+                setFilters={setFilters}
+              />
+            ),
+          },
+          {
+            label: 'Pants',
+            key: 'pants',
+            children: (
+              <Table
+                data={data}
+                isLoading={isLoading}
+                filters={filters}
+                setFilters={setFilters}
+              />
+            ),
+          },
+          {
+            label: 'Caps',
+            key: 'caps',
+            children: (
+              <Table
+                data={data}
+                isLoading={isLoading}
+                filters={filters}
+                setFilters={setFilters}
+              />
+            ),
+          },
+          {
+            label: 'Other',
+            key: 'other',
+            children: (
+              <Table
+                data={data}
+                isLoading={isLoading}
+                filters={filters}
+                setFilters={setFilters}
+              />
+            ),
+          },
+        ]}
       />
     </Flex>
   );

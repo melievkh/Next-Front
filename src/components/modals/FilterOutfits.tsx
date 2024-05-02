@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { CiFilter } from 'react-icons/ci';
 import {
   Modal,
   Form,
@@ -10,11 +11,7 @@ import {
   Row,
   Col,
 } from 'antd';
-import {
-  categoryOptions,
-  colorOptions,
-  sizeOptions,
-} from '@/constants/outfit.constants';
+import { colorOptions, sizeOptions } from '@/constants/outfit.constants';
 import { FilterOptions } from '@/views/app/outfit/Outfits';
 
 type Props = {
@@ -42,7 +39,7 @@ const FilterOutfitsForm = ({ handleFilter, handleClear }: Props) => {
       <Flex gap={10} align="center">
         <Typography.Text>Filter:</Typography.Text>
         <Button size="large" onClick={() => setVisible(true)}>
-          Filter
+          <CiFilter />
         </Button>
       </Flex>
 
@@ -63,10 +60,6 @@ const FilterOutfitsForm = ({ handleFilter, handleClear }: Props) => {
             sizes: [],
           }}
         >
-          <Form.Item label="Category" name="category">
-            <Select placeholder="Select category" options={categoryOptions} />
-          </Form.Item>
-
           <Form.Item label="Brand" name="brand">
             <Input placeholder="Enter brand" />
           </Form.Item>
