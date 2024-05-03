@@ -1,3 +1,7 @@
+import { Outfit } from './outfit.type';
+import { Store } from './store.type';
+import { User } from './user.type';
+
 export enum OrderStatus {
   ACCEPTED = 'accepted',
   COMPLETED = 'completed',
@@ -17,11 +21,10 @@ export interface Order {
   status: OrderStatus;
   total_price: number;
 
-  product: {
-    id: string;
-    code: string;
-    price: number;
-    title: string;
-    brand: string;
-  };
+  order_item_id: string;
+  store_id: string;
+  order_by_id: string;
+  store: Store;
+  order_by: User;
+  order_item: Outfit;
 }

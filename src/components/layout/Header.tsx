@@ -6,6 +6,7 @@ import {
   MenuFoldOutlined,
   UserOutlined,
 } from '@ant-design/icons';
+import { LuLogOut } from 'react-icons/lu';
 
 import { authActions } from '@/common/store/slices/auth.slice';
 import { useAppDispatch } from '@/common/store';
@@ -66,7 +67,7 @@ const LayoutHeader = ({ collapsed, setCollapsed }: LayoutHeaderProps) => {
       <Popover
         placement="bottomLeft"
         content={
-          <Button type="default" danger onClick={handleLogout}>
+          <Button icon={<LuLogOut />} onClick={handleLogout} danger>
             sign out
           </Button>
         }

@@ -1,4 +1,4 @@
-import { Flex, Input, Tabs, Typography } from 'antd';
+import { Flex, InputNumber, Tabs, Typography } from 'antd';
 import { useGetOrdersQuery } from '@/services/orderService';
 import OrderTable from './components/OrderTable';
 import { useState } from 'react';
@@ -14,7 +14,7 @@ export interface FilterOptions {
 
 const Orders = () => {
   const [filters, setFilters] = useState<FilterOptions>({
-    limit: 20,
+    limit: 10,
     page: 1,
     status: null,
     order_number: null,
@@ -23,19 +23,19 @@ const Orders = () => {
 
   const onChange = (key: string) => {
     switch (key) {
-      case '1':
+      case 'all':
         setFilters({ ...filters, status: null });
         break;
-      case '2':
+      case 'pending':
         setFilters({ ...filters, status: OrderStatus.PENDING });
         break;
-      case '3':
+      case 'accepted':
         setFilters({ ...filters, status: OrderStatus.ACCEPTED });
         break;
-      case '4':
+      case 'completed':
         setFilters({ ...filters, status: OrderStatus.COMPLETED });
         break;
-      case '5':
+      case 'cancelled':
         setFilters({ ...filters, status: OrderStatus.CANCELLED });
         break;
       default:
@@ -43,15 +43,15 @@ const Orders = () => {
     }
   };
 
-  const handleOrderNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFilters({ ...filters, order_number: Number(e.target.value) });
+  const handleOrderNumberChange = (value: number | null) => {
+    setFilters({ ...filters, order_number: value });
   };
 
   return (
     <div>
       <Typography.Title level={3}>Orders</Typography.Title>
       <Flex justify="flex-end">
-        <Input
+        <InputNumber
           placeholder="Search by order number"
           onChange={handleOrderNumberChange}
           prefix={<CiSearch size={20} />}
@@ -59,12 +59,12 @@ const Orders = () => {
         />
       </Flex>
       <Tabs
-        defaultActiveKey={'1'}
+        defaultActiveKey={'all'}
         onChange={onChange}
         items={[
           {
             label: 'All',
-            key: '1',
+            key: 'all',
             children: (
               <OrderTable
                 orderData={data?.result}
@@ -77,7 +77,7 @@ const Orders = () => {
           },
           {
             label: 'Active',
-            key: '2',
+            key: 'pending',
             children: (
               <OrderTable
                 orderData={data?.result}
@@ -90,7 +90,7 @@ const Orders = () => {
           },
           {
             label: 'Delivering',
-            key: '3',
+            key: 'accepted',
             children: (
               <OrderTable
                 orderData={data?.result}
@@ -103,7 +103,7 @@ const Orders = () => {
           },
           {
             label: 'Completed',
-            key: '4',
+            key: 'completed',
             children: (
               <OrderTable
                 orderData={data?.result}
@@ -116,7 +116,7 @@ const Orders = () => {
           },
           {
             label: 'Cancelled',
-            key: '5',
+            key: 'cancelled',
             children: (
               <OrderTable
                 orderData={data?.result}

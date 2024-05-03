@@ -25,7 +25,7 @@ export interface Store {
   email: string;
   password: string;
   photo_url: string;
-  phone_number?: string[];
+  phone_number: string[];
   role: StoreRole;
   storename: string;
   type: StoreType;

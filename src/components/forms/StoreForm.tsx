@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
+import { PlusOutlined } from '@ant-design/icons';
 import {
   Form,
   Input,
@@ -25,8 +25,6 @@ const StoreForm = ({ mode, storeData }: Props) => {
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState('');
   const [fileList, setFileList] = useState<UploadFile[]>([]);
-  const [phoneNumbers, setPhoneNumbers] = useState<string[]>(['']);
-
   const [form] = Form.useForm();
 
   const isEditMode = mode === 'EDIT';
@@ -68,21 +66,6 @@ const StoreForm = ({ mode, storeData }: Props) => {
   const handleMediaChange: UploadProps['onChange'] = ({
     fileList: newFileList,
   }) => setFileList(newFileList);
-
-  const handlePhoneNumberChange = (index: number, value: string) => {
-    const updatedPhoneNumbers = [...phoneNumbers];
-    updatedPhoneNumbers[index] = value;
-    setPhoneNumbers(updatedPhoneNumbers);
-  };
-
-  const handleAddPhoneNumber = () => {
-    setPhoneNumbers([...phoneNumbers, '']);
-  };
-
-  const handleRemovePhoneNumber = (index: number) => {
-    const updatedPhoneNumbers = phoneNumbers.filter((_, i) => i !== index);
-    setPhoneNumbers(updatedPhoneNumbers);
-  };
 
   const storeCategoryOptions = [
     { label: 'Outfits', value: 'outfits' },
@@ -150,47 +133,6 @@ const StoreForm = ({ mode, storeData }: Props) => {
               placeholder="Select category"
             />
           </Form.Item>
-        </Col>
-
-        <Col span={8}>
-          {phoneNumbers.map((phoneNumber, index) => (
-            <Row key={index} gutter={16}>
-              <Col span={18}>
-                <Form.Item
-                  label={index === 0 ? 'Phone number' : ''}
-                  name={`phone_numbers[${index}]`}
-                  rules={[
-                    { required: true, message: 'Phone number is required!' },
-                  ]}
-                >
-                  <Input
-                    placeholder="Enter phone number"
-                    value={phoneNumber}
-                    onChange={(e) =>
-                      handlePhoneNumberChange(index, e.target.value)
-                    }
-                  />
-                </Form.Item>
-              </Col>
-              {index === 0 && (
-                <Col span={6}>
-                  <Button type="primary" onClick={handleAddPhoneNumber}>
-                    <PlusOutlined /> Add Phone Number
-                  </Button>
-                </Col>
-              )}
-              {index > 0 && (
-                <Col span={6}>
-                  <Button
-                    type="default"
-                    shape="circle"
-                    onClick={() => handleRemovePhoneNumber(index)}
-                    icon={<MinusCircleOutlined />}
-                  />
-                </Col>
-              )}
-            </Row>
-          ))}
         </Col>
       </Row>
 

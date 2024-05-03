@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { TableRowSelection } from 'antd/es/table/interface';
 import {
@@ -15,9 +14,7 @@ import {
 } from 'antd';
 import { MdOutlineEdit, MdDelete } from 'react-icons/md';
 
-import { getUserRole } from '@/common/store/selectors';
 import { ROUTES } from '@/router/routes';
-import { Role } from '@/common/types/auth.type';
 import { Outfit } from '@/common/types/outfit.type';
 import { FilterOptions } from '../Outfits';
 import { useDeleteOutfitMutation } from '@/services/outfitService';
@@ -40,14 +37,13 @@ type Props = {
   setFilters: React.Dispatch<React.SetStateAction<FilterOptions>>;
 };
 
-const Table = ({ data, isLoading, filters, setFilters }: Props) => {
+const OutfitTable = ({ data, isLoading, filters, setFilters }: Props) => {
   const navigate = useNavigate();
   const [outfitInfoVisible, setOutfitInfoVisible] = useState<boolean>(false);
   const [selectedRecord, setSelectedRecord] = useState<Outfit | null>(null);
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
   const [deleteOutfit, { isLoading: isDeleteLoading }] =
     useDeleteOutfitMutation();
-  const userRole = useSelector(getUserRole);
 
   const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
     setSelectedRowKeys(newSelectedRowKeys);
@@ -97,7 +93,7 @@ const Table = ({ data, isLoading, filters, setFilters }: Props) => {
       render: (images) => {
         return (
           <Image.PreviewGroup items={images}>
-            <Image width={200} src={images[0]} />
+            <Image width={200} height={200} draggable src={images[0]} />
           </Image.PreviewGroup>
         );
       },
@@ -181,11 +177,9 @@ const Table = ({ data, isLoading, filters, setFilters }: Props) => {
     },
   ];
 
-  const isAdmin = userRole === Role.ADMIN;
-
   return (
     <Row className="gap-2">
-      {selectedRowKeys.length > 0 && isAdmin && (
+      {selectedRowKeys.length > 0 && (
         <Row>
           <Popconfirm
             placement="top"
@@ -231,4 +225,4 @@ const Table = ({ data, isLoading, filters, setFilters }: Props) => {
   );
 };
 
-export default Table;
+export default OutfitTable;

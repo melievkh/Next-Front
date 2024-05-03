@@ -33,9 +33,6 @@ const OrderTable = ({
 }: Props) => {
   const [orderInfoVisible, setOrderInfoVisible] = useState<boolean>(false);
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
-  const [acceptingOrder, setAcceptingOrder] = useState<string | null>(null);
-  const [completingOrder, setCompletingOrder] = useState<string | null>(null);
-  const [cancellingOrder, setCancellingOrder] = useState<string | null>(null);
 
   const [acceptOrder] = useAcceptOrderMutation();
   const [completeOrder] = useCompleteOrderMutation();
@@ -43,23 +40,17 @@ const OrderTable = ({
 
   const handleSubmitOrder = async (id: string, status: OrderStatus) => {
     if (status === OrderStatus.PENDING) {
-      setAcceptingOrder(id);
       await acceptOrder(id);
-      setAcceptingOrder(null);
     } else if (status === OrderStatus.ACCEPTED) {
-      setCompletingOrder(id);
       await completeOrder(id);
-      setCompletingOrder(null);
     }
   };
 
   const handleCancelOrder = async (id: string) => {
-    setCancellingOrder(id);
     await cancelOrder(id);
-    setCancellingOrder(null);
   };
 
-  const handleRowClick = (record: Order) => {
+  const handleClickShowMore = (record: Order) => {
     setSelectedOrder(record);
     setOrderInfoVisible(true);
   };
@@ -68,19 +59,16 @@ const OrderTable = ({
     {
       title: 'Order number',
       dataIndex: 'order_number',
-      key: 'order_number',
       render: (order_number: string) => <Tag>{order_number}</Tag>,
     },
     {
-      title: 'Order by',
+      title: 'Client number',
       dataIndex: 'order_by',
-      key: 'order_by',
       render: (order_by: any) => <a>{order_by.phone_number}</a>,
     },
     {
       title: 'Status',
       dataIndex: 'status',
-      key: 'status',
       render: (status: OrderStatus) => (
         <p style={{ color: getOrderStatusColor(status) }} key={status}>
           {status}
@@ -90,29 +78,24 @@ const OrderTable = ({
     {
       title: 'Quantity',
       dataIndex: 'quantity',
-      key: 'quantity',
     },
     {
       title: 'Price',
       dataIndex: 'total_price',
-      key: 'total_price',
       render: (total_price: number) => <a>{total_price} sum</a>,
     },
     {
       title: 'Address',
       dataIndex: 'address',
-      key: 'address',
     },
     {
       title: 'Order actions',
       dataIndex: 'status',
-      key: 'status',
       render: (status: OrderStatus, record: Order) => (
         <Flex gap={10}>
           {status === OrderStatus.ACCEPTED && (
             <Button
               onClick={() => handleCancelOrder(record.id)}
-              loading={cancellingOrder === record.id}
               size="small"
               danger
             >
@@ -125,9 +108,6 @@ const OrderTable = ({
             type="primary"
             disabled={getButtonDisabled(status)}
             onClick={() => handleSubmitOrder(record.id, status)}
-            loading={
-              acceptingOrder === record.id || completingOrder === record.id
-            }
             style={{ backgroundColor: getActionBackgroundColor(status) }}
           >
             {getActionButtonName(status)}
@@ -136,16 +116,24 @@ const OrderTable = ({
       ),
     },
     {
-      title: 'Deliver',
-      dataIndex: 'deliver',
-      key: 'deliver',
-      render: (deliver?: any) => <a>{deliver?.phone_number}</a>,
-    },
-    {
       title: 'Created',
       dataIndex: 'created_at',
-      key: 'created_at',
       render: (created: string) => <a>{getFormattedDate(created)}</a>,
+    },
+    {
+      title: 'Other',
+      dataIndex: 'other',
+      render: (_, record) => {
+        return (
+          <Button
+            type="default"
+            size="small"
+            onClick={() => handleClickShowMore(record)}
+          >
+            more...
+          </Button>
+        );
+      },
     },
   ];
 
@@ -157,9 +145,6 @@ const OrderTable = ({
         columns={columns}
         dataSource={orderData}
         loading={isLoading}
-        onRow={(record: Order) => ({
-          onClick: () => handleRowClick(record),
-        })}
         pagination={{
           total: dataCount,
           current: filters.page,

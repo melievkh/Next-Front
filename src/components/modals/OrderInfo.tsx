@@ -19,57 +19,36 @@ const OrderInfoModal = ({ order, visible, setVisible }: Props) => {
       <div className="flex flex-col gap-4">
         <div className="flex justify-between">
           <div className="flex flex-col gap-1">
-            <p className="font-mono">
-              <strong>Code:</strong> {order?.product.code}
+            <p>
+              <strong>Order number:</strong> <Tag>{order?.order_number}</Tag>
             </p>
-            <p className="font-mono">
-              <strong>Title:</strong> {order?.product.title}
+            <p>
+              <strong>Order item details: </strong>
+              <span className="font-sans">{order?.order_item_details}</span>
             </p>
-            <p className="font-mono">
-              <strong>Brand:</strong> {order?.product?.brand}
-            </p>
-            <p className="flex gap-1 items-center font-mono">
-              <strong>Color: </strong>
-              <span></span>({order?.color})
-            </p>
-
-            <p className="font-mono">
-              <strong>Size: </strong>
-              <Tag>{order?.size}</Tag>
+            <p>
+              <strong>Client number: </strong>
+              <Tag>{order?.order_by.phone_number}</Tag>
             </p>
           </div>
 
           <div className="flex flex-col gap-1">
-            <p className="font-mono">
-              <strong>Order number:</strong> <Tag>{order?.order_number}</Tag>
-            </p>
-            <p className="font-mono">
-              <strong>Ordered by: </strong>
-              <Tag>{order?.order_by.phone_number}</Tag>
-            </p>
-            <p className="font-mono">
-              <strong>Deliver by: </strong>
-              <Tag>{order?.deliver?.phone_number || 'not accepted'}</Tag>
-            </p>
-            <p className="font-mono">
+            <p>
               <strong>Quantity: </strong>
               <Tag>{order?.quantity}</Tag>
             </p>
-            <p className="font-mono">
+            <p>
               <strong>Status: </strong>
               <Tag>{order?.status}</Tag>
             </p>
-            <p className="font-mono">
+            <p>
               <strong>Address: </strong>
-              <Tag>{order?.address}</Tag>
+              {order?.address}
             </p>
           </div>
         </div>
 
-        <YandexMap
-          latitude={order?.address_latitude}
-          longitude={order?.address_longitude}
-        />
+        <YandexMap latitude={order?.latitude} longitude={order?.longitude} />
       </div>
     </Modal>
   );

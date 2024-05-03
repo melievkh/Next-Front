@@ -23,6 +23,8 @@ const AppRouter = () => {
     <AppLayout>
       <Routes>
         <Route index element={<Home />} />
+        <Route path={ROUTES.PROFILE} element={<Outfits />} />
+        <Route path={ROUTES.EDIT_PROFILE} element={<Outfits />} />
         <Route path={ROUTES.OUTFITS} element={<Outfits />} />
         <Route path={ROUTES.CREATE_OUTFIT} element={<CreateOutfit />} />
         <Route path={ROUTES.EDIT_OUTFIT} element={<EditOutfit />} />

@@ -7,6 +7,8 @@ export const ROUTES = {
   USERS: '/users',
 
   LOGIN: '/login',
+  PROFILE: '/profile',
+  EDIT_PROFILE: '/profile/edit',
 
   STORES: '/stores',
   STORE: '/stores/:id',

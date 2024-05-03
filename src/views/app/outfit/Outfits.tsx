@@ -11,7 +11,7 @@ import {
 } from '@/common/types/outfit.type';
 import { FilterOutfits } from '@/components/modals';
 import { ROUTES } from '@/router/routes';
-import Table from './components/Table';
+import OutfitTable from './components/OutfitTable';
 
 export interface FilterOptions {
   limit?: number;
@@ -120,7 +120,7 @@ const Outfits = () => {
             label: 'All',
             key: 'all',
             children: (
-              <Table
+              <OutfitTable
                 data={data}
                 isLoading={isLoading}
                 filters={filters}
@@ -132,7 +132,7 @@ const Outfits = () => {
             label: 'Shoes',
             key: 'shoes',
             children: (
-              <Table
+              <OutfitTable
                 data={data}
                 isLoading={isLoading}
                 filters={filters}
@@ -144,7 +144,7 @@ const Outfits = () => {
             label: 'Sneakers',
             key: 'sneakers',
             children: (
-              <Table
+              <OutfitTable
                 data={data}
                 isLoading={isLoading}
                 filters={filters}
@@ -156,7 +156,7 @@ const Outfits = () => {
             label: 'T-Shirts',
             key: 't_shirts',
             children: (
-              <Table
+              <OutfitTable
                 data={data}
                 isLoading={isLoading}
                 filters={filters}
@@ -168,7 +168,7 @@ const Outfits = () => {
             label: 'Pants',
             key: 'pants',
             children: (
-              <Table
+              <OutfitTable
                 data={data}
                 isLoading={isLoading}
                 filters={filters}
@@ -180,7 +180,7 @@ const Outfits = () => {
             label: 'Caps',
             key: 'caps',
             children: (
-              <Table
+              <OutfitTable
                 data={data}
                 isLoading={isLoading}
                 filters={filters}
@@ -192,7 +192,7 @@ const Outfits = () => {
             label: 'Other',
             key: 'other',
             children: (
-              <Table
+              <OutfitTable
                 data={data}
                 isLoading={isLoading}
                 filters={filters}

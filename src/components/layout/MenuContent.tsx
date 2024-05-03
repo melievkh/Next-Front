@@ -1,72 +1,79 @@
-import { Menu } from 'antd';
+import { Menu, MenuProps } from 'antd';
 import { useSelector } from 'react-redux';
-import { Link, useLocation } from 'react-router-dom';
 import {
   MdOutlineDashboard,
   MdOutlineProductionQuantityLimits,
   MdOutlineBookmarkBorder,
   MdOutlineLocalGroceryStore,
 } from 'react-icons/md';
+import { LiaUserEditSolid } from 'react-icons/lia';
+import { FaRegUser } from 'react-icons/fa';
 import { getUserRole } from '@/common/store/selectors';
 import { Role } from '@/common/types/auth.type';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+type MenuItem = Required<MenuProps>['items'][number];
 
 const MenuContent = () => {
-  const location = useLocation();
+  const [current, setCurrent] = useState('');
   const role = useSelector(getUserRole);
+  const navigate = useNavigate();
 
   const isAdmin = role === Role.ADMIN;
 
-  const menuItems = [
+  const menuItems: MenuItem[] = [
     {
       key: 'menu',
       icon: <MdOutlineDashboard />,
       label: 'Dashboard',
-      title: 'Dashboard',
-      to: '/',
+    },
+    {
+      key: 'profile',
+      icon: <FaRegUser />,
+      label: 'Profile',
+      children: [
+        {
+          key: 'profile/edit',
+          icon: <LiaUserEditSolid />,
+          label: 'Edit Profile',
+        },
+      ],
     },
     {
       key: 'outfits',
       icon: <MdOutlineProductionQuantityLimits />,
       label: 'Outfits',
-      title: 'Outfits',
-      to: '/outfits',
     },
     {
       key: 'orders',
       icon: <MdOutlineBookmarkBorder />,
       label: 'Orders',
-      title: 'Orders',
-      to: '/orders',
-    },
-    {
-      key: 'stores',
-      icon: <MdOutlineLocalGroceryStore />,
-      label: 'Stores',
-      title: 'Stores',
-      to: '/stores',
     },
   ];
 
-  const basePath = location.pathname.split('/')[1];
+  if (isAdmin) {
+    menuItems.push({
+      key: 'stores',
+      icon: <MdOutlineLocalGroceryStore />,
+      label: 'Stores',
+    });
+  }
 
-  const selectedKey = menuItems.find((item) =>
-    item.to.includes(`/${basePath}`),
-  )?.key;
+  const onClick: MenuProps['onClick'] = (e) => {
+    navigate(e.key);
+    setCurrent(e.key);
+  };
 
   return (
     <Menu
       theme="dark"
-      mode="vertical"
-      defaultSelectedKeys={[selectedKey || '1']}
-    >
-      {menuItems.map((item) =>
-        isAdmin || item.key !== 'stores' ? (
-          <Menu.Item key={item.key} icon={item.icon}>
-            <Link to={item.to}>{item.label}</Link>
-          </Menu.Item>
-        ) : null,
-      )}
-    </Menu>
+      mode="inline"
+      onClick={onClick}
+      items={menuItems}
+      selectedKeys={[current]}
+      defaultSelectedKeys={['1']}
+    />
   );
 };
 
