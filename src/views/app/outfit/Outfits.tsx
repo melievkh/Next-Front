@@ -33,7 +33,7 @@ const Outfits = () => {
     sizes: [],
     colors: [],
   });
-  const { data, isLoading } = useGetOutfitsQuery({});
+  const { data, isLoading } = useGetOutfitsQuery(filters);
   const navigate = useNavigate();
 
   const handleOnCodeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -86,7 +86,7 @@ const Outfits = () => {
 
   return (
     <Flex gap={20} vertical>
-      <Typography.Title level={2}>Base Info</Typography.Title>
+      <Typography.Title level={3}>Base Info</Typography.Title>
       <Flex gap={10} justify="space-between">
         <Flex gap={20}>
           <Input
@@ -94,7 +94,6 @@ const Outfits = () => {
             onChange={handleOnCodeChange}
             prefix={<CiSearch size={20} />}
             style={{ width: '300px' }}
-            size="large"
           />
           <FilterOutfits
             handleFilter={handleFilter}
@@ -104,19 +103,17 @@ const Outfits = () => {
 
         <Button
           type="primary"
-          size="large"
           className="flex items-center gap-1"
           onClick={() => navigate(ROUTES.CREATE_OUTFIT)}
         >
           <CiCirclePlus size={22} />
-          Create
+          Create Outfit
         </Button>
       </Flex>
 
       <Tabs
         defaultActiveKey={'1'}
         onChange={onChange}
-        size="large"
         style={{ width: '100%' }}
         items={[
           {

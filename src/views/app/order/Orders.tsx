@@ -49,20 +49,18 @@ const Orders = () => {
 
   return (
     <div>
-      <Typography.Title level={2}>Orders</Typography.Title>
+      <Typography.Title level={3}>Orders</Typography.Title>
       <Flex justify="flex-end">
         <Input
           placeholder="Search by order number"
           onChange={handleOrderNumberChange}
           prefix={<CiSearch size={20} />}
           style={{ width: '300px' }}
-          size="large"
         />
       </Flex>
       <Tabs
         defaultActiveKey={'1'}
         onChange={onChange}
-        size="large"
         items={[
           {
             label: 'All',

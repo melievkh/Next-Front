@@ -1,3 +1,4 @@
 import OutfitForm from './OutfitForm';
+import StoreForm from './StoreForm';
 
-export { OutfitForm };
+export { OutfitForm, StoreForm };

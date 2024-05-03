@@ -38,7 +38,7 @@ const FilterOutfitsForm = ({ handleFilter, handleClear }: Props) => {
     <>
       <Flex gap={10} align="center">
         <Typography.Text>Filter:</Typography.Text>
-        <Button size="large" onClick={() => setVisible(true)}>
+        <Button onClick={() => setVisible(true)}>
           <CiFilter />
         </Button>
       </Flex>

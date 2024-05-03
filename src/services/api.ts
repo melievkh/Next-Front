@@ -49,6 +49,7 @@ export const TagTypes = {
   GET_OUTFITS: 'GET_OUTFITS',
   GET_OUTFIT: 'GET_OUTFIT',
   GET_ORDERS: 'GET_ORDERS',
+  GET_STORES: 'GET_STORES',
 };
 
 export const api = createApi({

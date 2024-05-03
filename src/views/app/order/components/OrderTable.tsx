@@ -66,7 +66,7 @@ const OrderTable = ({
 
   const columns: TableProps<Order>['columns'] = [
     {
-      title: 'Order',
+      title: 'Order number',
       dataIndex: 'order_number',
       key: 'order_number',
       render: (order_number: string) => <Tag>{order_number}</Tag>,
@@ -88,10 +88,15 @@ const OrderTable = ({
       ),
     },
     {
+      title: 'Quantity',
+      dataIndex: 'quantity',
+      key: 'quantity',
+    },
+    {
       title: 'Price',
-      dataIndex: 'product',
-      key: 'product',
-      render: (product: any) => <a>{product.price} sum</a>,
+      dataIndex: 'total_price',
+      key: 'total_price',
+      render: (total_price: number) => <a>{total_price} sum</a>,
     },
     {
       title: 'Address',

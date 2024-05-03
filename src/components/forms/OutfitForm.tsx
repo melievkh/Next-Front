@@ -119,10 +119,10 @@ const OutfitForm = ({ mode, outfitData }: Props) => {
         <Col span={8}>
           <Form.Item
             label="Title"
-            name="title"
+            name="name"
             rules={[{ required: true, message: 'Title is required!' }]}
           >
-            <Input placeholder=" Enter title" name="title" />
+            <Input placeholder="Enter title" name="name" />
           </Form.Item>
         </Col>
       </Row>

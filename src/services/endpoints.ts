@@ -3,6 +3,7 @@ export const endpoints = {
   register: '/auth/register',
 
   me: '/store/me',
+  stores: '/store',
 
   outfits: '/outfits',
   outfit: (id: string) => `/outfits/${id}`,

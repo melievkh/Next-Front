@@ -5,6 +5,7 @@ import { TableRowSelection } from 'antd/es/table/interface';
 import {
   Table as ATable,
   Button,
+  Flex,
   Image,
   Popconfirm,
   Row,
@@ -64,7 +65,7 @@ const Table = ({ data, isLoading, filters, setFilters }: Props) => {
       .then(() => {
         message.success('Deleted successfully');
       })
-      .catch((error) => console.log(error));
+      .catch((error) => console.error(error));
     setSelectedRowKeys([]);
   };
 
@@ -73,9 +74,13 @@ const Table = ({ data, isLoading, filters, setFilters }: Props) => {
     onChange: onSelectChange,
   };
 
-  const handleRowClick = (record: Outfit) => {
+  const handleClickShowMore = (record: Outfit) => {
     setSelectedRecord(record);
     setOutfitInfoVisible(true);
+  };
+
+  const handleNavigateToEdit = (outfit: Outfit) => {
+    navigate(ROUTES.EDIT_OUTFIT, { state: { outfit } });
   };
 
   const columns: TableProps<any>['columns'] = [
@@ -148,6 +153,32 @@ const Table = ({ data, isLoading, filters, setFilters }: Props) => {
       dataIndex: 'brand',
       key: 'brand',
     },
+    {
+      title: 'Actions',
+      dataIndex: 'actions',
+      key: 'actions',
+      render: (_, record) => {
+        return (
+          <Flex gap={10}>
+            <Button
+              type="default"
+              size="small"
+              className="bg-[#e3edfc]"
+              onClick={() => handleNavigateToEdit(record)}
+            >
+              <MdOutlineEdit />
+            </Button>
+            <Button
+              type="default"
+              size="small"
+              onClick={() => handleClickShowMore(record)}
+            >
+              more
+            </Button>
+          </Flex>
+        );
+      },
+    },
   ];
 
   const isAdmin = userRole === Role.ADMIN;
@@ -155,19 +186,7 @@ const Table = ({ data, isLoading, filters, setFilters }: Props) => {
   return (
     <Row className="gap-2">
       {selectedRowKeys.length > 0 && isAdmin && (
-        <Row className="gap-3">
-          {selectedRowKeys.length === 1 && (
-            <Button
-              className="flex gap-2 items-center"
-              onClick={() => {
-                navigate(ROUTES.EDIT_OUTFIT, {
-                  state: { outfitId: selectedRowKeys[0] },
-                });
-              }}
-            >
-              <MdOutlineEdit /> Edit
-            </Button>
-          )}
+        <Row>
           <Popconfirm
             placement="top"
             title={'Are you sure to delete?'}
@@ -189,15 +208,12 @@ const Table = ({ data, isLoading, filters, setFilters }: Props) => {
       )}
 
       <ATable
-        rowKey="_id"
+        rowKey="id"
         columns={columns}
         dataSource={data?.result}
         loading={isLoading}
         rowSelection={rowSelection}
         style={{ width: '100%' }}
-        onRow={(record) => ({
-          onClick: () => handleRowClick(record),
-        })}
         pagination={{
           total: data?.count,
           current: filters.page,

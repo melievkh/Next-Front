@@ -1,31 +1,24 @@
 export enum OrderStatus {
-  PENDING = 'pending',
   ACCEPTED = 'accepted',
   COMPLETED = 'completed',
   CANCELLED = 'cancelled',
+  PENDING = 'pending',
 }
 
 export interface Order {
   id: string;
-  order_number: string;
-  status: OrderStatus;
-  quantity: number;
-  size: string;
-  color: string;
-  created_at: string;
   address: string;
-  address_longitude: number;
-  address_latitude: number;
-  order_by: {
-    _id: string;
-    phone_number: string;
-  };
-  deliver: {
-    _id: string;
-    phone_number: string;
-  };
+  created_at: string;
+  latitude: number;
+  longitude: number;
+  order_item_details: string;
+  order_number: string;
+  quantity: number;
+  status: OrderStatus;
+  total_price: number;
+
   product: {
-    _id: string;
+    id: string;
     code: string;
     price: number;
     title: string;

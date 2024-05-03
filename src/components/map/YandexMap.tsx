@@ -10,7 +10,6 @@ const YandexMap = ({ latitude, longitude }: Props) => {
   const latitude_address = latitude || 55.751574;
   const longitude_address = longitude || 37.573856;
 
-  console.log(longitude, latitude);
   useEffect(() => {
     if (!mapContainer.current) return;
 
