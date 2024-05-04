@@ -6,6 +6,7 @@ import {
   CreateOutfit,
   CreateStore,
   EditOutfit,
+  EditProfile,
   EditStore,
   Home,
   Orders,
@@ -24,7 +25,7 @@ const AppRouter = () => {
       <Routes>
         <Route index element={<Home />} />
         <Route path={ROUTES.PROFILE} element={<Outfits />} />
-        <Route path={ROUTES.EDIT_PROFILE} element={<Outfits />} />
+        <Route path={ROUTES.EDIT_PROFILE} element={<EditProfile />} />
         <Route path={ROUTES.OUTFITS} element={<Outfits />} />
         <Route path={ROUTES.CREATE_OUTFIT} element={<CreateOutfit />} />
         <Route path={ROUTES.EDIT_OUTFIT} element={<EditOutfit />} />

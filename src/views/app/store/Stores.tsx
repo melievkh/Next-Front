@@ -7,6 +7,7 @@ import { CiSearch } from 'react-icons/ci';
 import { Option } from 'antd/es/mentions';
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '@/router/routes';
+import { Template } from '@/components/layout';
 
 const Stores = () => {
   const navigate = useNavigate();
@@ -34,40 +35,42 @@ const Stores = () => {
   };
 
   return (
-    <Row className="w-full gap-10">
-      <Flex className="w-full" justify="space-between">
-        <Flex gap={10}>
-          <Input
-            placeholder="Search"
-            onChange={handleStorenameChange}
-            prefix={<CiSearch size={18} />}
-            style={{ width: '300px' }}
-          />
-          <Select
-            defaultValue="All"
-            className="w-100"
-            style={{ minWidth: 180 }}
-            onChange={handleSelectChange}
-            placeholder="Account Status"
-          >
-            <Option value="all">All</Option>
-            <Option value="available">Available</Option>
-            <Option value="unavailable">Unavailable</Option>
-          </Select>
+    <Template>
+      <Row>
+        <Flex justify="space-between" gap={20}>
+          <Flex gap={10}>
+            <Input
+              placeholder="Search by store name"
+              onChange={handleStorenameChange}
+              prefix={<CiSearch size={18} />}
+              style={{ width: '300px' }}
+            />
+            <Select
+              defaultValue="All"
+              className="w-100"
+              style={{ minWidth: 180 }}
+              onChange={handleSelectChange}
+              placeholder="Account Status"
+            >
+              <Option value="all">All</Option>
+              <Option value="available">Available</Option>
+              <Option value="unavailable">Unavailable</Option>
+            </Select>
+          </Flex>
+          <Button type="primary" onClick={() => navigate(ROUTES.CREATE_STORE)}>
+            Create Store
+          </Button>
         </Flex>
-        <Button type="primary" onClick={() => navigate(ROUTES.CREATE_STORE)}>
-          Create Store
-        </Button>
-      </Flex>
 
-      <StoresTable
-        storeData={data?.result}
-        dataCount={data?.count}
-        isLoading={isFetching}
-        filters={filters}
-        setFilters={setFilters}
-      />
-    </Row>
+        <StoresTable
+          storeData={data?.result}
+          dataCount={data?.count}
+          isLoading={isFetching}
+          filters={filters}
+          setFilters={setFilters}
+        />
+      </Row>
+    </Template>
   );
 };
 

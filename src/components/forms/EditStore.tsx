@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { PlusOutlined } from '@ant-design/icons';
 import {
   Form,
@@ -13,31 +13,29 @@ import {
   UploadFile,
   Image,
   message,
+  Divider,
+  Flex,
 } from 'antd';
 import { getBase64 } from '@/utils/common';
 import { config } from '@/config/app.config';
 import { Store } from '@/common/types/store.type';
 import { Template } from '../layout';
-import { useCreateStoreMutation } from '@/services/storeService';
+import { useUpdateStoreMutation } from '@/services/storeService';
 
-type Props = { mode: string; storeData?: Store };
+type Props = { storeData?: Store };
 
-const StoreForm = ({ mode, storeData }: Props) => {
+const EditStoreForm = ({ storeData }: Props) => {
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState('');
   const [fileList, setFileList] = useState<UploadFile[]>([]);
-  const [createStore, { isLoading }] = useCreateStoreMutation();
   const [form] = Form.useForm();
-
-  const isEditMode = mode === 'EDIT';
-  if (isEditMode && storeData) {
-    form.setFieldsValue(storeData);
-  }
+  const [updateStore, { isLoading }] = useUpdateStoreMutation();
 
   const handleFormSubmit = async (values: any) => {
     try {
-      await createStore(values).unwrap();
-      message.success('Store created successfully!');
+      const data = { ...values, id: storeData?.id };
+      await updateStore(data).unwrap();
+      message.success('Store updated successfully!');
     } catch (error) {
       console.error(error);
     }
@@ -79,18 +77,23 @@ const StoreForm = ({ mode, storeData }: Props) => {
     { label: 'Other', value: 'other' },
   ];
 
+  useEffect(() => {
+    if (storeData) {
+      form.setFieldsValue(storeData);
+    }
+  }, [storeData, form]);
+
   return (
     <Form
       form={form}
       onFinish={handleFormSubmit}
       layout="vertical"
-      className="flex flex-col gap-4"
+      className="w-full flex flex-col gap-4"
     >
-      <Typography.Title level={3}>Basic Info</Typography.Title>
-
       <Template>
-        <Row gutter={16}>
-          <Col span={8}>
+        <Typography.Title level={3}>Edit Store</Typography.Title>
+        <Flex gap={30}>
+          <Col span={6}>
             <Form.Item
               label="Store name"
               name="storename"
@@ -99,7 +102,7 @@ const StoreForm = ({ mode, storeData }: Props) => {
               <Input placeholder="Enter store name" name="storename" />
             </Form.Item>
           </Col>
-          <Col span={8}>
+          <Col span={6}>
             <Form.Item
               label="Email"
               name="email"
@@ -108,26 +111,8 @@ const StoreForm = ({ mode, storeData }: Props) => {
               <Input placeholder="Enter email" name="email" />
             </Form.Item>
           </Col>
-          <Col span={8}>
-            <Form.Item
-              label="Password"
-              name="password"
-              rules={[
-                { required: true, message: 'Password is required!' },
-                {
-                  pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/,
-                  message:
-                    'Password must contain at least one lowercase letter, one uppercase letter, one number, and one special character',
-                },
-              ]}
-            >
-              <Input.Password placeholder="Enter password" name="password" />
-            </Form.Item>
-          </Col>
-        </Row>
 
-        <Row gutter={16}>
-          <Col span={8}>
+          <Col span={6}>
             <Form.Item
               label="Category"
               name="category"
@@ -140,47 +125,16 @@ const StoreForm = ({ mode, storeData }: Props) => {
               />
             </Form.Item>
           </Col>
-          <Col span={8}>
-            <Form.Item
-              label="Phone number 1"
-              name="phone_number1"
-              rules={[
-                {
-                  required: true,
-                  pattern: /^\+998\d{9}$/,
-                  message: 'Invalid phone number!',
-                },
-              ]}
-            >
-              <Input placeholder="+998xxyyyyyyy" name="phone_number1" />
-            </Form.Item>
-          </Col>
-          <Col span={8}>
-            <Form.Item
-              label="Phone number 2 (optional)"
-              name="phone_number2"
-              rules={[
-                {
-                  required: false,
-                  pattern: /^\+998\d{9}$/,
-                  message: 'Invalid phone number!',
-                },
-              ]}
-            >
-              <Input placeholder="+998xxyyyyyyy" name="phone_number2" />
-            </Form.Item>
-          </Col>
-        </Row>
-      </Template>
+        </Flex>
+        <Divider />
 
-      <Template>
         <Form.Item label="Photo" name="photo_url">
           <Col>
             <Upload
               name="image"
               accept="image"
               action={`${config.BASE_URL}/file-upload/image`}
-              listType="picture-card"
+              listType="picture-circle"
               fileList={fileList}
               beforeUpload={handleBeforeUpload}
               onPreview={handlePreview}
@@ -201,20 +155,14 @@ const StoreForm = ({ mode, storeData }: Props) => {
             )}
           </Col>
         </Form.Item>
+        <Form.Item className="flex justify-end">
+          <Button type="primary" htmlType="submit" loading={isLoading}>
+            Update Store
+          </Button>
+        </Form.Item>
       </Template>
-
-      <Form.Item>
-        <Button
-          loading={isLoading}
-          className="w-full"
-          type="primary"
-          htmlType="submit"
-        >
-          {isEditMode ? 'Update Store' : 'Create Store'}
-        </Button>
-      </Form.Item>
     </Form>
   );
 };
 
-export default StoreForm;
+export default EditStoreForm;

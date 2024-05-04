@@ -16,7 +16,7 @@ import { useNavigate } from 'react-router-dom';
 type MenuItem = Required<MenuProps>['items'][number];
 
 const MenuContent = () => {
-  const [current, setCurrent] = useState('');
+  const [current, setCurrent] = useState('menu');
   const role = useSelector(getUserRole);
   const navigate = useNavigate();
 
@@ -72,7 +72,7 @@ const MenuContent = () => {
       onClick={onClick}
       items={menuItems}
       selectedKeys={[current]}
-      defaultSelectedKeys={['1']}
+      defaultSelectedKeys={['menu']}
     />
   );
 };

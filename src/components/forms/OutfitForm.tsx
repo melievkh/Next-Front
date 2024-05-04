@@ -14,7 +14,6 @@ import {
   UploadFile,
   Image,
   message,
-  Divider,
 } from 'antd';
 import {
   categoryOptions,
@@ -28,6 +27,7 @@ import {
 import { Outfit } from '@/common/types/outfit.type';
 import { getBase64 } from '@/utils/common';
 import { config } from '@/config/app.config';
+import { Template } from '../layout';
 
 type Props = { mode: string; outfitData?: Outfit };
 
@@ -89,131 +89,134 @@ const OutfitForm = ({ mode, outfitData }: Props) => {
       layout="vertical"
       className="flex flex-col gap-4"
     >
-      <Typography.Text className="text-[30px] font-bold">
-        Basic Info
-      </Typography.Text>
+      <Typography.Title level={3}>
+        {isEditMode ? 'Edit Outfit' : 'Create Outfit'}
+      </Typography.Title>
 
-      <Row gutter={16}>
-        <Col span={8}>
-          <Form.Item
-            label="Category"
-            name="category"
-            rules={[{ required: true, message: 'Please select a category!' }]}
-          >
-            <Select options={categoryOptions} placeholder="Select category" />
-          </Form.Item>
-        </Col>
-        <Col span={8}>
-          <Form.Item
-            label="Sizes"
-            name="sizes"
-            rules={[{ required: true, message: 'Please select size!' }]}
-          >
-            <Select
-              mode="multiple"
-              options={sizeOptions}
-              placeholder="Select sizes"
-            />
-          </Form.Item>
-        </Col>
-        <Col span={8}>
-          <Form.Item
-            label="Title"
-            name="name"
-            rules={[{ required: true, message: 'Title is required!' }]}
-          >
-            <Input placeholder="Enter title" name="name" />
-          </Form.Item>
-        </Col>
-      </Row>
+      <Template>
+        <Typography.Title level={4}>Base Info</Typography.Title>
+        <Row gutter={16}>
+          <Col span={8}>
+            <Form.Item
+              label="Category"
+              name="category"
+              rules={[{ required: true, message: 'Please select a category!' }]}
+            >
+              <Select options={categoryOptions} placeholder="Select category" />
+            </Form.Item>
+          </Col>
+          <Col span={8}>
+            <Form.Item
+              label="Sizes"
+              name="sizes"
+              rules={[{ required: true, message: 'Please select size!' }]}
+            >
+              <Select
+                mode="multiple"
+                options={sizeOptions}
+                placeholder="Select sizes"
+              />
+            </Form.Item>
+          </Col>
+          <Col span={8}>
+            <Form.Item
+              label="Title"
+              name="name"
+              rules={[{ required: true, message: 'Title is required!' }]}
+            >
+              <Input placeholder="Enter title" name="name" />
+            </Form.Item>
+          </Col>
+        </Row>
 
-      <Row gutter={16}>
-        <Col span={8}>
-          <Form.Item
-            label="Colors"
-            name="colors"
-            rules={[{ required: true, message: 'Please select color!' }]}
-          >
-            <Select
-              mode="multiple"
-              options={colorOptions}
-              placeholder="Select sizes"
-            />
-          </Form.Item>
-        </Col>
-        <Col span={8}>
-          <Form.Item
-            label="Code"
-            name="code"
-            rules={[{ required: true, message: 'Code is required!' }]}
-          >
-            <Input placeholder="Enter code" name="code" />
-          </Form.Item>
-        </Col>
-        <Col span={8}>
-          <Form.Item
-            label="Price"
-            name="price"
-            rules={[{ required: true, message: 'Price is required!' }]}
-          >
-            <Input type="number" placeholder="Enter price" name="price" />
-          </Form.Item>
-        </Col>
-      </Row>
+        <Row gutter={16}>
+          <Col span={8}>
+            <Form.Item
+              label="Colors"
+              name="colors"
+              rules={[{ required: true, message: 'Please select color!' }]}
+            >
+              <Select
+                mode="multiple"
+                options={colorOptions}
+                placeholder="Select sizes"
+              />
+            </Form.Item>
+          </Col>
+          <Col span={8}>
+            <Form.Item
+              label="Code"
+              name="code"
+              rules={[{ required: true, message: 'Code is required!' }]}
+            >
+              <Input placeholder="Enter code" name="code" />
+            </Form.Item>
+          </Col>
+          <Col span={8}>
+            <Form.Item
+              label="Price"
+              name="price"
+              rules={[{ required: true, message: 'Price is required!' }]}
+            >
+              <Input type="number" placeholder="Enter price" name="price" />
+            </Form.Item>
+          </Col>
+        </Row>
 
-      <Flex justify="space-between">
-        <Col className="w-[45%]">
-          <Form.Item label="Brand" name="brand">
-            <Input placeholder="Enter brand" name="brand" />
-          </Form.Item>
-        </Col>
-        <Col className="w-[50%]">
-          <Form.Item label="Description" name="description">
-            <Input.TextArea
-              placeholder="Enter description"
-              name="description"
-              rows={4}
-              style={{ resize: 'none' }}
-            />
-          </Form.Item>
-        </Col>
-      </Flex>
+        <Flex justify="space-between">
+          <Col className="w-[45%]">
+            <Form.Item label="Brand" name="brand">
+              <Input placeholder="Enter brand" name="brand" />
+            </Form.Item>
+          </Col>
+          <Col className="w-[50%]">
+            <Form.Item label="Description" name="description">
+              <Input.TextArea
+                placeholder="Enter description"
+                name="description"
+                rows={4}
+                style={{ resize: 'none' }}
+              />
+            </Form.Item>
+          </Col>
+        </Flex>
+      </Template>
 
-      <Divider />
-
-      <Form.Item
-        label="Images"
-        name="image_urls"
-        rules={[{ required: true, message: 'At least one image is required!' }]}
-      >
-        <Col>
-          <Upload
-            name="image"
-            accept="image"
-            action={`${config.BASE_URL}/file-upload/image`}
-            listType="picture-card"
-            fileList={fileList}
-            beforeUpload={handleBeforeUpload}
-            onPreview={handlePreview}
-            onChange={handleMediaChange}
-          >
-            {fileList.length >= 5 ? null : uploadButton}
-          </Upload>
-          {previewImage && (
-            <Image
-              wrapperStyle={{ display: 'none' }}
-              preview={{
-                visible: previewOpen,
-                onVisibleChange: (visible) => setPreviewOpen(visible),
-                afterOpenChange: (visible) => !visible && setPreviewImage(''),
-              }}
-              src={previewImage}
-            />
-          )}
-        </Col>
-      </Form.Item>
-
-      <Divider />
+      <Template>
+        <Form.Item
+          label="Images"
+          name="image_urls"
+          rules={[
+            { required: true, message: 'At least one image is required!' },
+          ]}
+        >
+          <Col>
+            <Upload
+              name="image"
+              accept="image"
+              action={`${config.BASE_URL}/file-upload/image`}
+              listType="picture-card"
+              fileList={fileList}
+              beforeUpload={handleBeforeUpload}
+              onPreview={handlePreview}
+              onChange={handleMediaChange}
+            >
+              {fileList.length >= 5 ? null : uploadButton}
+            </Upload>
+            {previewImage && (
+              <Image
+                wrapperStyle={{ display: 'none' }}
+                preview={{
+                  visible: previewOpen,
+                  onVisibleChange: (visible) => setPreviewOpen(visible),
+                  afterOpenChange: (visible) => !visible && setPreviewImage(''),
+                }}
+                src={previewImage}
+              />
+            )}
+          </Col>
+        </Form.Item>
+      </Template>
 
       <Form.Item>
         <Button

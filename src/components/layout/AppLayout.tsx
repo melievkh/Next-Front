@@ -1,4 +1,4 @@
-import { Layout, theme } from 'antd';
+import { Layout } from 'antd';
 import { ReactNode, useState } from 'react';
 
 import LayoutHeader from './Header';
@@ -8,13 +8,10 @@ const { Sider, Content } = Layout;
 
 const AppLayout = ({ children }: { children: ReactNode }) => {
   const [collapsed, setCollapsed] = useState<boolean>(false);
-  const {
-    token: { colorBgContainer },
-  } = theme.useToken();
 
   return (
     <Layout className="h-[100vh]">
-      <Sider trigger={null} collapsible collapsed={collapsed}>
+      <Sider width={240} trigger={null} collapsible collapsed={collapsed}>
         <MenuContent />
       </Sider>
 
@@ -26,7 +23,6 @@ const AppLayout = ({ children }: { children: ReactNode }) => {
           style={{
             padding: 24,
             minHeight: 280,
-            background: colorBgContainer,
             overflow: 'auto',
           }}
         >

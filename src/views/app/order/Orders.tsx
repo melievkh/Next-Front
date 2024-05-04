@@ -4,6 +4,7 @@ import OrderTable from './components/OrderTable';
 import { useState } from 'react';
 import { OrderStatus } from '@/common/types/order.type';
 import { CiSearch } from 'react-icons/ci';
+import { Template } from '@/components/layout';
 
 export interface FilterOptions {
   limit: number;
@@ -50,85 +51,89 @@ const Orders = () => {
   return (
     <div>
       <Typography.Title level={3}>Orders</Typography.Title>
-      <Flex justify="flex-end">
-        <InputNumber
-          placeholder="Search by order number"
-          onChange={handleOrderNumberChange}
-          prefix={<CiSearch size={20} />}
-          style={{ width: '300px' }}
+      <Template>
+        <Flex className="mb-6">
+          <InputNumber
+            size="large"
+            placeholder="Search by order number"
+            onChange={handleOrderNumberChange}
+            prefix={<CiSearch size={20} />}
+            style={{ width: '300px' }}
+          />
+        </Flex>
+
+        <Tabs
+          defaultActiveKey={'all'}
+          onChange={onChange}
+          items={[
+            {
+              label: 'All',
+              key: 'all',
+              children: (
+                <OrderTable
+                  orderData={data?.result}
+                  dataCount={data?.count}
+                  isLoading={isFetching}
+                  filters={filters}
+                  setFilters={setFilters}
+                />
+              ),
+            },
+            {
+              label: 'Active',
+              key: 'pending',
+              children: (
+                <OrderTable
+                  orderData={data?.result}
+                  dataCount={data?.count}
+                  isLoading={isFetching}
+                  filters={filters}
+                  setFilters={setFilters}
+                />
+              ),
+            },
+            {
+              label: 'Delivering',
+              key: 'accepted',
+              children: (
+                <OrderTable
+                  orderData={data?.result}
+                  dataCount={data?.count}
+                  isLoading={isFetching}
+                  filters={filters}
+                  setFilters={setFilters}
+                />
+              ),
+            },
+            {
+              label: 'Completed',
+              key: 'completed',
+              children: (
+                <OrderTable
+                  orderData={data?.result}
+                  dataCount={data?.count}
+                  isLoading={isFetching}
+                  filters={filters}
+                  setFilters={setFilters}
+                />
+              ),
+            },
+            {
+              label: 'Cancelled',
+              key: 'cancelled',
+              children: (
+                <OrderTable
+                  orderData={data?.result}
+                  dataCount={data?.count}
+                  isLoading={isFetching}
+                  filters={filters}
+                  setFilters={setFilters}
+                />
+              ),
+            },
+          ]}
         />
-      </Flex>
-      <Tabs
-        defaultActiveKey={'all'}
-        onChange={onChange}
-        items={[
-          {
-            label: 'All',
-            key: 'all',
-            children: (
-              <OrderTable
-                orderData={data?.result}
-                dataCount={data?.count}
-                isLoading={isFetching}
-                filters={filters}
-                setFilters={setFilters}
-              />
-            ),
-          },
-          {
-            label: 'Active',
-            key: 'pending',
-            children: (
-              <OrderTable
-                orderData={data?.result}
-                dataCount={data?.count}
-                isLoading={isFetching}
-                filters={filters}
-                setFilters={setFilters}
-              />
-            ),
-          },
-          {
-            label: 'Delivering',
-            key: 'accepted',
-            children: (
-              <OrderTable
-                orderData={data?.result}
-                dataCount={data?.count}
-                isLoading={isFetching}
-                filters={filters}
-                setFilters={setFilters}
-              />
-            ),
-          },
-          {
-            label: 'Completed',
-            key: 'completed',
-            children: (
-              <OrderTable
-                orderData={data?.result}
-                dataCount={data?.count}
-                isLoading={isFetching}
-                filters={filters}
-                setFilters={setFilters}
-              />
-            ),
-          },
-          {
-            label: 'Cancelled',
-            key: 'cancelled',
-            children: (
-              <OrderTable
-                orderData={data?.result}
-                dataCount={data?.count}
-                isLoading={isFetching}
-                filters={filters}
-                setFilters={setFilters}
-              />
-            ),
-          },
-        ]}
-      />
+      </Template>
     </div>
   );
 };

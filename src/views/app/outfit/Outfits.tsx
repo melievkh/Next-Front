@@ -12,6 +12,7 @@ import {
 import { FilterOutfits } from '@/components/modals';
 import { ROUTES } from '@/router/routes';
 import OutfitTable from './components/OutfitTable';
+import { Template } from '@/components/layout';
 
 export interface FilterOptions {
   limit?: number;
@@ -87,121 +88,125 @@ const Outfits = () => {
   return (
     <Flex gap={20} vertical>
       <Typography.Title level={3}>Base Info</Typography.Title>
-      <Flex gap={10} justify="space-between">
-        <Flex gap={20}>
-          <Input
-            placeholder="Search for outfits by code"
-            onChange={handleOnCodeChange}
-            prefix={<CiSearch size={20} />}
-            style={{ width: '300px' }}
-          />
-          <FilterOutfits
-            handleFilter={handleFilter}
-            handleClear={handleClear}
-          />
+      <Template>
+        <Flex gap={10} justify="space-between" className="mb-6">
+          <Flex gap={20}>
+            <Input
+              placeholder="Search for outfits by code"
+              onChange={handleOnCodeChange}
+              prefix={<CiSearch size={20} />}
+              style={{ width: '300px' }}
+              size="large"
+            />
+            <FilterOutfits
+              handleFilter={handleFilter}
+              handleClear={handleClear}
+            />
+          </Flex>
+
+          <Button
+            type="primary"
+            size="large"
+            className="flex items-center gap-1"
+            onClick={() => navigate(ROUTES.CREATE_OUTFIT)}
+          >
+            <CiCirclePlus size={22} />
+            Create Outfit
+          </Button>
         </Flex>
 
-        <Button
-          type="primary"
-          className="flex items-center gap-1"
-          onClick={() => navigate(ROUTES.CREATE_OUTFIT)}
-        >
-          <CiCirclePlus size={22} />
-          Create Outfit
-        </Button>
-      </Flex>
-
-      <Tabs
-        defaultActiveKey={'1'}
-        onChange={onChange}
-        style={{ width: '100%' }}
-        items={[
-          {
-            label: 'All',
-            key: 'all',
-            children: (
-              <OutfitTable
-                data={data}
-                isLoading={isLoading}
-                filters={filters}
-                setFilters={setFilters}
-              />
-            ),
-          },
-          {
-            label: 'Shoes',
-            key: 'shoes',
-            children: (
-              <OutfitTable
-                data={data}
-                isLoading={isLoading}
-                filters={filters}
-                setFilters={setFilters}
-              />
-            ),
-          },
-          {
-            label: 'Sneakers',
-            key: 'sneakers',
-            children: (
-              <OutfitTable
-                data={data}
-                isLoading={isLoading}
-                filters={filters}
-                setFilters={setFilters}
-              />
-            ),
-          },
-          {
-            label: 'T-Shirts',
-            key: 't_shirts',
-            children: (
-              <OutfitTable
-                data={data}
-                isLoading={isLoading}
-                filters={filters}
-                setFilters={setFilters}
-              />
-            ),
-          },
-          {
-            label: 'Pants',
-            key: 'pants',
-            children: (
-              <OutfitTable
-                data={data}
-                isLoading={isLoading}
-                filters={filters}
-                setFilters={setFilters}
-              />
-            ),
-          },
-          {
-            label: 'Caps',
-            key: 'caps',
-            children: (
-              <OutfitTable
-                data={data}
-                isLoading={isLoading}
-                filters={filters}
-                setFilters={setFilters}
-              />
-            ),
-          },
-          {
-            label: 'Other',
-            key: 'other',
-            children: (
-              <OutfitTable
-                data={data}
-                isLoading={isLoading}
-                filters={filters}
-                setFilters={setFilters}
-              />
-            ),
-          },
-        ]}
-      />
+        <Tabs
+          defaultActiveKey={'1'}
+          onChange={onChange}
+          style={{ width: '100%' }}
+          items={[
+            {
+              label: 'All',
+              key: 'all',
+              children: (
+                <OutfitTable
+                  data={data}
+                  isLoading={isLoading}
+                  filters={filters}
+                  setFilters={setFilters}
+                />
+              ),
+            },
+            {
+              label: 'Shoes',
+              key: 'shoes',
+              children: (
+                <OutfitTable
+                  data={data}
+                  isLoading={isLoading}
+                  filters={filters}
+                  setFilters={setFilters}
+                />
+              ),
+            },
+            {
+              label: 'Sneakers',
+              key: 'sneakers',
+              children: (
+                <OutfitTable
+                  data={data}
+                  isLoading={isLoading}
+                  filters={filters}
+                  setFilters={setFilters}
+                />
+              ),
+            },
+            {
+              label: 'T-Shirts',
+              key: 't_shirts',
+              children: (
+                <OutfitTable
+                  data={data}
+                  isLoading={isLoading}
+                  filters={filters}
+                  setFilters={setFilters}
+                />
+              ),
+            },
+            {
+              label: 'Pants',
+              key: 'pants',
+              children: (
+                <OutfitTable
+                  data={data}
+                  isLoading={isLoading}
+                  filters={filters}
+                  setFilters={setFilters}
+                />
+              ),
+            },
+            {
+              label: 'Caps',
+              key: 'caps',
+              children: (
+                <OutfitTable
+                  data={data}
+                  isLoading={isLoading}
+                  filters={filters}
+                  setFilters={setFilters}
+                />
+              ),
+            },
+            {
+              label: 'Other',
+              key: 'other',
+              children: (
+                <OutfitTable
+                  data={data}
+                  isLoading={isLoading}
+                  filters={filters}
+                  setFilters={setFilters}
+                />
+              ),
+            },
+          ]}
+        />
+      </Template>
     </Flex>
   );
 };

@@ -64,7 +64,7 @@ const OrderTable = ({
     {
       title: 'Client number',
       dataIndex: 'order_by',
-      render: (order_by: any) => <a>{order_by.phone_number}</a>,
+      render: (order_by: any) => <a>{order_by.phone_number1}</a>,
     },
     {
       title: 'Status',

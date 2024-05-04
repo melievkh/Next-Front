@@ -4,6 +4,10 @@ export const endpoints = {
 
   me: '/store/me',
   stores: '/store',
+  storeCreate: '/store',
+  store: (id: string) => `/store/${id}`,
+  storeUpdate: (id: string) => `/store/${id}`,
+  storeDelete: `/store/delete`,
 
   outfits: '/outfits',
   outfit: (id: string) => `/outfits/${id}`,
