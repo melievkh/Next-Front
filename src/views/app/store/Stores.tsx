@@ -1,13 +1,12 @@
-import { Button, Flex, Input, Row, Select } from 'antd';
-import StoresTable from './components/StoresTable';
-import { useGetStoresQuery } from '@/services/storeService';
 import { useState } from 'react';
-import { FilterStoresOptions } from '@/common/types/store.type';
-import { CiSearch } from 'react-icons/ci';
-import { Option } from 'antd/es/mentions';
 import { useNavigate } from 'react-router-dom';
+import { Button, Flex, Input, Row, Select } from 'antd';
+import { CiSearch } from 'react-icons/ci';
+import { useGetStoresQuery } from '@/services/storeService';
+import { FilterStoresOptions } from '@/common/types/store.type';
 import { ROUTES } from '@/router/routes';
 import { Template } from '@/components/layout';
+import StoresTable from './components/StoresTable';
 
 const Stores = () => {
   const navigate = useNavigate();
@@ -52,9 +51,9 @@ const Stores = () => {
               onChange={handleSelectChange}
               placeholder="Account Status"
             >
-              <Option value="all">All</Option>
-              <Option value="available">Available</Option>
-              <Option value="unavailable">Unavailable</Option>
+              <Select.Option value="all">All</Select.Option>
+              <Select.Option value="available">Available</Select.Option>
+              <Select.Option value="unavailable">Unavailable</Select.Option>
             </Select>
           </Flex>
           <Button type="primary" onClick={() => navigate(ROUTES.CREATE_STORE)}>

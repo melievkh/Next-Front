@@ -41,6 +41,13 @@ const outfitService = api.injectEndpoints({
       }),
       invalidatesTags: [TagTypes.GET_OUTFITS],
     }),
+    deleteOutfitImage: builder.mutation({
+      query: (data) => ({
+        url: endpoints.outfitImageDelete,
+        method: 'PATCH',
+        body: data,
+      }),
+    }),
   }),
 });
 
@@ -50,4 +57,5 @@ export const {
   useCreateOutfitMutation,
   useUpdateOutfitMutation,
   useDeleteOutfitMutation,
+  useDeleteOutfitImageMutation,
 } = outfitService;

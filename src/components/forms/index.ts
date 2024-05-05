@@ -1,6 +1,6 @@
 import ChangePasswordForm from './ChangePasswordForm';
-import EditStoreForm from './EditStore';
+import EditStoreForm from './EditStoreForm';
 import OutfitForm from './OutfitForm';
-import StoreForm from './StoreForm';
+import StoreForm from './CreateStoreForm';
 
 export { ChangePasswordForm, EditStoreForm, OutfitForm, StoreForm };

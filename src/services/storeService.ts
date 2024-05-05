@@ -33,6 +33,14 @@ const storeService = api.injectEndpoints({
       }),
       invalidatesTags: [TagTypes.GET_STORES],
     }),
+    changePassword: builder.mutation({
+      query: (data) => ({
+        url: endpoints.storeChangePassword(data.id),
+        method: 'PATCH',
+        body: data,
+      }),
+      invalidatesTags: [TagTypes.GET_ME, TagTypes.GET_STORES],
+    }),
   }),
 });
 
@@ -41,4 +49,5 @@ export const {
   useGetStoresQuery,
   useCreateStoreMutation,
   useUpdateStoreMutation,
+  useChangePasswordMutation,
 } = storeService;

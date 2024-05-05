@@ -8,12 +8,14 @@ export const endpoints = {
   store: (id: string) => `/store/${id}`,
   storeUpdate: (id: string) => `/store/${id}`,
   storeDelete: `/store/delete`,
+  storeChangePassword: (id: string) => `/store/change-password/${id}`,
 
   outfits: '/outfits',
   outfit: (id: string) => `/outfits/${id}`,
   outfitCreate: '/outfits',
   outfitUpdate: (id: string) => `/outfits/${id}`,
   outfitDelete: `/outfits/delete`,
+  outfitImageDelete: `/outfits/delete-image`,
 
   orders: '/orders',
   order: (id: string) => `/orders/${id}`,

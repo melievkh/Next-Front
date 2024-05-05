@@ -75,7 +75,7 @@ const LayoutHeader = ({ collapsed, setCollapsed }: LayoutHeaderProps) => {
         className="flex gap-2 items-center"
       >
         <Button type="primary" shape="circle" icon={<UserOutlined />} />
-        {data?.result.email}
+        {data?.result.storename ?? data?.result.email}
       </Popover>
     </Header>
   );

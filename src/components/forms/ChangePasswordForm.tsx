@@ -1,11 +1,27 @@
-import { Button, Form, Input, Typography } from 'antd';
+import { Button, Form, Input, Typography, message } from 'antd';
 import { Template } from '../layout';
+import { useChangePasswordMutation } from '@/services/storeService';
 
-const ChangePasswordForm = () => {
+const ChangePasswordForm = ({ storeId }: { storeId: string }) => {
   const [form] = Form.useForm();
+  const [changePassword, { isLoading }] = useChangePasswordMutation();
 
-  const handleOnFinish = (values: any) => {
-    console.log('Success:', values);
+  const handleOnFinish = async (values: any) => {
+    try {
+      if (values.oldPassword === values.newPassword) {
+        message.error('Old password and new password cannot be the same');
+        return;
+      }
+
+      await changePassword({
+        oldPassword: values.oldPassword,
+        newPassword: values.newPassword,
+        id: storeId,
+      }).unwrap();
+      message.success('Password changed successfully');
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -22,9 +38,10 @@ const ChangePasswordForm = () => {
           name="oldPassword"
           label="Old Password"
           rules={[
+            { required: true, message: 'Old Password is required!' },
             {
-              required: true,
-              message: 'Please input your old password!',
+              pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/,
+              message: 'Password is not strong enough!',
             },
           ]}
         >
@@ -34,9 +51,10 @@ const ChangePasswordForm = () => {
           name="newPassword"
           label="New Password"
           rules={[
+            { required: true, message: 'Old Password is required!' },
             {
-              required: true,
-              message: 'Please input your new password!',
+              pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/,
+              message: 'Password is not strong enough!',
             },
           ]}
         >
@@ -45,18 +63,27 @@ const ChangePasswordForm = () => {
         <Form.Item
           name="confirmPassword"
           label="Confirm Password"
+          dependencies={['newPassword']}
           rules={[
             {
               required: true,
               message: 'Please input your confirm password!',
             },
+            ({ getFieldValue }) => ({
+              validator(_, value) {
+                if (!value || getFieldValue('newPassword') === value) {
+                  return Promise.resolve();
+                }
+                return Promise.reject(new Error('Passwords do not match'));
+              },
+            }),
           ]}
         >
           <Input.Password placeholder="Enter confirm password" />
         </Form.Item>
 
         <Form.Item className="flex justify-end">
-          <Button type="primary" htmlType="submit">
+          <Button loading={isLoading} type="primary" htmlType="submit">
             Submit
           </Button>
         </Form.Item>

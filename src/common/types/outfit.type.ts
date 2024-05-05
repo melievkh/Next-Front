@@ -49,6 +49,7 @@ export interface Outfit {
   name: string;
   price: number;
   sizes: OutfitSize[];
+  store_id: string;
 }
 
 export interface CreateOutfit {

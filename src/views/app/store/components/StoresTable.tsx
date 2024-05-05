@@ -1,6 +1,17 @@
 import { FilterStoresOptions, Store } from '@/common/types/store.type';
-import { Avatar, Flex, Image, Switch, Table, TableProps, Tag } from 'antd';
-import { MdOutlineLocalGroceryStore } from 'react-icons/md';
+import { ROUTES } from '@/router/routes';
+import {
+  Avatar,
+  Button,
+  Flex,
+  Image,
+  Switch,
+  Table,
+  TableProps,
+  Tag,
+} from 'antd';
+import { MdOutlineEdit, MdOutlineLocalGroceryStore } from 'react-icons/md';
+import { useNavigate } from 'react-router-dom';
 
 type Props = {
   storeData: Store[];
@@ -17,6 +28,12 @@ const StoresTable = ({
   filters,
   setFilters,
 }: Props) => {
+  const navigate = useNavigate();
+
+  const handleNavigateToEdit = (store: Store) => {
+    navigate(ROUTES.EDIT_STORE, { state: { store } });
+  };
+
   const columns: TableProps<Store>['columns'] = [
     {
       title: 'No.',
@@ -62,6 +79,22 @@ const StoresTable = ({
       dataIndex: 'available',
       render: (available: boolean) => {
         return <Switch checked={available} />;
+      },
+    },
+    {
+      title: 'Actions',
+      dataIndex: 'actions',
+      render: (_, record) => {
+        return (
+          <Button
+            type="default"
+            size="small"
+            className="bg-[#e3edfc]"
+            onClick={() => handleNavigateToEdit(record)}
+          >
+            <MdOutlineEdit />
+          </Button>
+        );
       },
     },
   ];

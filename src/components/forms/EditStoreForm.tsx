@@ -4,7 +4,6 @@ import {
   Form,
   Input,
   Select,
-  Row,
   Col,
   Button,
   Typography,
@@ -155,6 +154,7 @@ const EditStoreForm = ({ storeData }: Props) => {
             )}
           </Col>
         </Form.Item>
+
         <Form.Item className="flex justify-end">
           <Button type="primary" htmlType="submit" loading={isLoading}>
             Update Store

@@ -22,25 +22,31 @@ import {
 } from '@/constants/outfit.constants';
 import {
   useCreateOutfitMutation,
+  useDeleteOutfitImageMutation,
   useUpdateOutfitMutation,
 } from '@/services/outfitService';
 import { Outfit } from '@/common/types/outfit.type';
 import { getBase64 } from '@/utils/common';
 import { config } from '@/config/app.config';
 import { Template } from '../layout';
+import { getExistingFilelist } from '@/utils/form.utils';
 
 type Props = { mode: string; outfitData?: Outfit };
 
 const OutfitForm = ({ mode, outfitData }: Props) => {
+  const existingFileList = getExistingFilelist(outfitData?.image_urls);
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState('');
-  const [fileList, setFileList] = useState<UploadFile[]>([]);
+  const [fileList, setFileList] = useState<UploadFile[] | any>(
+    existingFileList,
+  );
 
   const [form] = Form.useForm();
   const [updateOutfit, { isLoading: isUpdateLoading }] =
     useUpdateOutfitMutation();
   const [createOutfit, { isLoading: isCreateLoading }] =
     useCreateOutfitMutation();
+  const [deleteOutfitImage] = useDeleteOutfitImageMutation();
 
   const isEditMode = mode === 'EDIT';
   if (isEditMode) {
@@ -81,6 +87,23 @@ const OutfitForm = ({ mode, outfitData }: Props) => {
   const handleMediaChange: UploadProps['onChange'] = ({
     fileList: newFileList,
   }) => setFileList(newFileList);
+
+  const handleDeleteMedia = async (file: UploadFile) => {
+    const newFileList = fileList.filter(
+      (item: UploadFile) => item.uid !== file.uid,
+    );
+    setFileList(newFileList);
+
+    if (outfitData?.image_urls) {
+      const res = await deleteOutfitImage({
+        store_id: outfitData?.store_id,
+        outfit_id: outfitData?.id,
+        image_url: file.url,
+      });
+
+      console.log(res);
+    }
+  };
 
   return (
     <Form
@@ -200,6 +223,7 @@ const OutfitForm = ({ mode, outfitData }: Props) => {
               beforeUpload={handleBeforeUpload}
               onPreview={handlePreview}
               onChange={handleMediaChange}
+              onRemove={(image) => handleDeleteMedia(image)}
             >
               {fileList.length >= 5 ? null : uploadButton}
             </Upload>
