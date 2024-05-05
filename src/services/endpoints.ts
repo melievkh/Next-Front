@@ -6,7 +6,7 @@ export const endpoints = {
   storeCreate: '/store',
   store: (id: string) => `/store/${id}`,
   storeUpdate: (id: string) => `/store/${id}`,
-  storeDelete: `/store/delete`,
+  storeDelete: (id: string) => `/store/${id}`,
   storeChangePassword: (id: string) => `/store/change-password/${id}`,
 
   outfits: '/outfits',

@@ -1,8 +1,11 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Button, Flex, Input, Row, Select } from 'antd';
+import { Button, Flex, Input, Row, Select, message } from 'antd';
 import { CiSearch } from 'react-icons/ci';
-import { useGetStoresQuery } from '@/services/storeService';
+import {
+  useDeleteStoreMutation,
+  useGetStoresQuery,
+} from '@/services/storeService';
 import { FilterStoresOptions } from '@/common/types/store.type';
 import { ROUTES } from '@/router/routes';
 import { Template } from '@/components/layout';
@@ -17,7 +20,8 @@ const Stores = () => {
     available: null,
     storename: null,
   });
-  const { data, isFetching } = useGetStoresQuery(filters);
+  const { data, isFetching, refetch } = useGetStoresQuery(filters);
+  const [deleteStore] = useDeleteStoreMutation();
 
   const handleStorenameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFilters({ ...filters, storename: e.target.value });
@@ -30,6 +34,16 @@ const Stores = () => {
       setFilters({ ...filters, available: true });
     } else {
       setFilters({ ...filters, available: false });
+    }
+  };
+
+  const handleDeleteStore = async (storeId: string) => {
+    try {
+      await deleteStore(storeId).unwrap();
+      message.success('Store deleted successfully');
+      refetch();
+    } catch (error) {
+      console.error(error);
     }
   };
 
@@ -67,6 +81,7 @@ const Stores = () => {
           isLoading={isFetching}
           filters={filters}
           setFilters={setFilters}
+          onDeleteStore={handleDeleteStore}
         />
       </Row>
     </Template>

@@ -13,8 +13,8 @@ import { LiaUserEditSolid } from 'react-icons/lia';
 import { FaRegUser } from 'react-icons/fa';
 import { getUserRole } from '@/common/store/selectors';
 import { Role } from '@/common/types/auth.type';
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { ROUTES } from '@/router/routes';
 
 type MenuItem = Required<MenuProps>['items'][number];
@@ -23,12 +23,14 @@ const MenuContent = () => {
   const [current, setCurrent] = useState('menu');
   const role = useSelector(getUserRole);
   const navigate = useNavigate();
+  const location = useLocation();
 
+  const { pathname } = location;
   const isAdmin = role === Role.ADMIN;
 
   const menuItems: MenuItem[] = [
     {
-      key: 'menu',
+      key: '/',
       icon: <MdOutlineDashboard />,
       label: 'Dashboard',
     },
@@ -100,6 +102,10 @@ const MenuContent = () => {
     navigate(e.key);
     setCurrent(e.key);
   };
+
+  useEffect(() => {
+    setCurrent(pathname);
+  }, [pathname]);
 
   return (
     <Menu

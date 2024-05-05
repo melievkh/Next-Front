@@ -1,17 +1,22 @@
-import { FilterStoresOptions, Store } from '@/common/types/store.type';
-import { ROUTES } from '@/router/routes';
+import { useNavigate } from 'react-router-dom';
 import {
   Avatar,
   Button,
   Flex,
   Image,
+  Popconfirm,
   Switch,
   Table,
   TableProps,
   Tag,
 } from 'antd';
-import { MdOutlineEdit, MdOutlineLocalGroceryStore } from 'react-icons/md';
-import { useNavigate } from 'react-router-dom';
+import {
+  MdOutlineEdit,
+  MdOutlineLocalGroceryStore,
+  MdDeleteOutline,
+} from 'react-icons/md';
+import { ROUTES } from '@/router/routes';
+import { FilterStoresOptions, Store } from '@/common/types/store.type';
 
 type Props = {
   storeData: Store[];
@@ -19,6 +24,7 @@ type Props = {
   isLoading: boolean;
   filters: FilterStoresOptions;
   setFilters: React.Dispatch<React.SetStateAction<FilterStoresOptions>>;
+  onDeleteStore: (storeId: string) => void;
 };
 
 const StoresTable = ({
@@ -27,6 +33,7 @@ const StoresTable = ({
   dataCount,
   filters,
   setFilters,
+  onDeleteStore,
 }: Props) => {
   const navigate = useNavigate();
 
@@ -86,14 +93,28 @@ const StoresTable = ({
       dataIndex: 'actions',
       render: (_, record) => {
         return (
-          <Button
-            type="default"
-            size="small"
-            className="bg-[#e3edfc]"
-            onClick={() => handleNavigateToEdit(record)}
-          >
-            <MdOutlineEdit />
-          </Button>
+          <Flex gap={10}>
+            <Button
+              type="default"
+              size="small"
+              className="bg-[#e3edfc]"
+              onClick={() => handleNavigateToEdit(record)}
+            >
+              <MdOutlineEdit />
+            </Button>
+            <Popconfirm
+              placement="top"
+              title={'Are you sure to delete?'}
+              okText="Sure, delete"
+              okType="danger"
+              cancelText="Cancel"
+              onConfirm={() => onDeleteStore(record.id)}
+            >
+              <Button danger size="small">
+                <MdDeleteOutline />
+              </Button>
+            </Popconfirm>
+          </Flex>
         );
       },
     },
