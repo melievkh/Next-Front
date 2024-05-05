@@ -10,8 +10,10 @@ import { LuLogOut } from 'react-icons/lu';
 
 import { authActions } from '@/common/store/slices/auth.slice';
 import { useAppDispatch } from '@/common/store';
-import { useGetMeQuery } from '@/services/storeService';
+import { useGetStoreQuery } from '@/services/storeService';
 import { ROUTES } from '@/router/routes';
+import { useSelector } from 'react-redux';
+import { getUserId } from '@/common/store/selectors';
 
 const { Header } = Layout;
 
@@ -24,7 +26,9 @@ const LayoutHeader = ({ collapsed, setCollapsed }: LayoutHeaderProps) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [arrow, setArrow] = useState<string>('Show');
-  const { data } = useGetMeQuery({});
+
+  const storeId = useSelector(getUserId);
+  const { data } = useGetStoreQuery(storeId);
   const {
     token: { colorBgContainer },
   } = theme.useToken();

@@ -13,9 +13,9 @@ const storeService = api.injectEndpoints({
         })}`,
       providesTags: [TagTypes.GET_STORES],
     }),
-    getMe: builder.query({
-      query: () => endpoints.me,
-      providesTags: [TagTypes.GET_ME],
+    getStore: builder.query({
+      query: (id) => endpoints.store(id),
+      providesTags: [TagTypes.GET_STORE],
     }),
     createStore: builder.mutation({
       query: (store) => ({
@@ -39,13 +39,13 @@ const storeService = api.injectEndpoints({
         method: 'PATCH',
         body: data,
       }),
-      invalidatesTags: [TagTypes.GET_ME, TagTypes.GET_STORES],
+      invalidatesTags: [TagTypes.GET_STORE, TagTypes.GET_STORES],
     }),
   }),
 });
 
 export const {
-  useGetMeQuery,
+  useGetStoreQuery,
   useGetStoresQuery,
   useCreateStoreMutation,
   useUpdateStoreMutation,

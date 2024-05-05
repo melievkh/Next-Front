@@ -45,7 +45,7 @@ const baseQueryWithReauth = async (args: any, api: any, extraOptions: any) => {
 };
 
 export const TagTypes = {
-  GET_ME: 'GET_ME',
+  GET_STORE: 'GET_STORE',
   GET_OUTFITS: 'GET_OUTFITS',
   GET_OUTFIT: 'GET_OUTFIT',
   GET_ORDERS: 'GET_ORDERS',

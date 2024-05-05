@@ -2,7 +2,6 @@ export const endpoints = {
   login: '/auth/login',
   register: '/auth/register',
 
-  me: '/store/me',
   stores: '/store',
   storeCreate: '/store',
   store: (id: string) => `/store/${id}`,

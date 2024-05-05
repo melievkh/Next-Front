@@ -1,9 +1,12 @@
+import { getUserId } from '@/common/store/selectors';
 import { ChangePasswordForm, EditStoreForm } from '@/components/forms';
-import { useGetMeQuery } from '@/services/storeService';
+import { useGetStoreQuery } from '@/services/storeService';
 import { Tabs } from 'antd';
+import { useSelector } from 'react-redux';
 
 const EditProfile = () => {
-  const { data } = useGetMeQuery({});
+  const storeId = useSelector(getUserId);
+  const { data } = useGetStoreQuery(storeId);
 
   return (
     <Tabs

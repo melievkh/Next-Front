@@ -45,9 +45,21 @@ const MenuContent = () => {
       ],
     },
     {
-      key: ROUTES.OUTFITS,
+      key: 'outfit',
       icon: <MdOutlineProductionQuantityLimits />,
       label: 'Outfits',
+      children: [
+        {
+          key: ROUTES.OUTFITS,
+          icon: <HiMenuAlt1 />,
+          label: 'Outfits list',
+        },
+        {
+          key: ROUTES.CREATE_OUTFIT,
+          icon: <IoAddCircleOutline />,
+          label: 'Create Outfit',
+        },
+      ],
     },
     {
       key: ROUTES.ORDERS,
