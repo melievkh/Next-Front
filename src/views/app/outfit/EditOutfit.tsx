@@ -1,16 +1,14 @@
 import { useLocation } from 'react-router-dom';
 
 import { OutfitForm } from '@/components/forms';
+import { useGetOutfitQuery } from '@/services/outfitService';
 
-const EditProduct = () => {
+const EditOutfit = () => {
   const location = useLocation();
-  const { outfit } = location.state;
+  const { outfitId } = location.state;
+  const { data } = useGetOutfitQuery(outfitId);
 
-  return (
-    <>
-      <OutfitForm outfitData={outfit} mode="EDIT" />
-    </>
-  );
+  return <OutfitForm outfitData={data?.result} mode="EDIT" />;
 };
 
-export default EditProduct;
+export default EditOutfit;

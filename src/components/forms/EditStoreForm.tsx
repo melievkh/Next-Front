@@ -76,6 +76,11 @@ const EditStoreForm = ({ storeData }: Props) => {
     { label: 'Other', value: 'other' },
   ];
 
+  const storeTypeOptions = [
+    { label: 'Online', value: 'online' },
+    { label: 'Physical', value: 'physical' },
+  ];
+
   useEffect(() => {
     if (storeData) {
       form.setFieldsValue(storeData);
@@ -92,7 +97,7 @@ const EditStoreForm = ({ storeData }: Props) => {
       <Template>
         <Typography.Title level={3}>Edit Store</Typography.Title>
         <Flex gap={30}>
-          <Col span={6}>
+          <Col span={4}>
             <Form.Item
               label="Store name"
               name="storename"
@@ -101,7 +106,7 @@ const EditStoreForm = ({ storeData }: Props) => {
               <Input placeholder="Enter store name" name="storename" />
             </Form.Item>
           </Col>
-          <Col span={6}>
+          <Col span={4}>
             <Form.Item
               label="Email"
               name="email"
@@ -111,7 +116,7 @@ const EditStoreForm = ({ storeData }: Props) => {
             </Form.Item>
           </Col>
 
-          <Col span={6}>
+          <Col span={4}>
             <Form.Item
               label="Category"
               name="category"
@@ -121,6 +126,18 @@ const EditStoreForm = ({ storeData }: Props) => {
                 mode="multiple"
                 options={storeCategoryOptions}
                 placeholder="Select category"
+              />
+            </Form.Item>
+          </Col>
+          <Col span={4}>
+            <Form.Item
+              label="Store type"
+              name="type"
+              rules={[{ required: true, message: 'Please select store type!' }]}
+            >
+              <Select
+                options={storeTypeOptions}
+                placeholder="Select store type"
               />
             </Form.Item>
           </Col>

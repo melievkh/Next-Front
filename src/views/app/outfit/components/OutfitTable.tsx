@@ -76,7 +76,7 @@ const OutfitTable = ({ data, isLoading, filters, setFilters }: Props) => {
   };
 
   const handleNavigateToEdit = (outfit: Outfit) => {
-    navigate(ROUTES.EDIT_OUTFIT, { state: { outfit } });
+    navigate(ROUTES.EDIT_OUTFIT, { state: { outfitId: outfit.id } });
   };
 
   const columns: TableProps<any>['columns'] = [

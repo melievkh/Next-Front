@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { PlusOutlined } from '@ant-design/icons';
 import {
   Form,
@@ -25,21 +25,18 @@ import {
   useDeleteOutfitImageMutation,
   useUpdateOutfitMutation,
 } from '@/services/outfitService';
-import { Outfit } from '@/common/types/outfit.type';
 import { getBase64 } from '@/utils/common';
 import { config } from '@/config/app.config';
+import { Outfit } from '@/common/types/outfit.type';
 import { Template } from '../layout';
 import { getExistingFilelist } from '@/utils/form.utils';
 
 type Props = { mode: string; outfitData?: Outfit };
 
 const OutfitForm = ({ mode, outfitData }: Props) => {
-  const existingFileList = getExistingFilelist(outfitData?.image_urls);
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState('');
-  const [fileList, setFileList] = useState<UploadFile[] | any>(
-    existingFileList,
-  );
+  const [fileList, setFileList] = useState<UploadFile[] | any>([]);
 
   const [form] = Form.useForm();
   const [updateOutfit, { isLoading: isUpdateLoading }] =
@@ -49,9 +46,6 @@ const OutfitForm = ({ mode, outfitData }: Props) => {
   const [deleteOutfitImage] = useDeleteOutfitImageMutation();
 
   const isEditMode = mode === 'EDIT';
-  if (isEditMode) {
-    form.setFieldsValue(outfitData);
-  }
 
   const handleFormSubmit = async (values: any) => {
     console.log(values);
@@ -95,15 +89,20 @@ const OutfitForm = ({ mode, outfitData }: Props) => {
     setFileList(newFileList);
 
     if (outfitData?.image_urls) {
-      const res = await deleteOutfitImage({
+      await deleteOutfitImage({
         store_id: outfitData?.store_id,
         outfit_id: outfitData?.id,
         image_url: file.url,
       });
-
-      console.log(res);
     }
   };
+
+  useEffect(() => {
+    if (isEditMode) form.setFieldsValue(outfitData);
+
+    const existingFileList = getExistingFilelist(outfitData?.image_urls);
+    setFileList(existingFileList);
+  }, [outfitData, form, isEditMode]);
 
   return (
     <Form

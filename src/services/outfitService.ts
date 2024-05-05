@@ -44,9 +44,10 @@ const outfitService = api.injectEndpoints({
     deleteOutfitImage: builder.mutation({
       query: (data) => ({
         url: endpoints.outfitImageDelete,
-        method: 'PATCH',
+        method: 'POST',
         body: data,
       }),
+      invalidatesTags: [TagTypes.GET_OUTFITS, TagTypes.GET_OUTFIT],
     }),
   }),
 });

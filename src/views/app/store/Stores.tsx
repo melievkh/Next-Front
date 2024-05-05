@@ -49,7 +49,7 @@ const Stores = () => {
 
   return (
     <Template>
-      <Row>
+      <Row className="gap-10">
         <Flex justify="space-between" gap={20}>
           <Flex gap={10}>
             <Input

@@ -38,7 +38,7 @@ const StoresTable = ({
   const navigate = useNavigate();
 
   const handleNavigateToEdit = (store: Store) => {
-    navigate(ROUTES.EDIT_STORE, { state: { store } });
+    navigate(ROUTES.EDIT_STORE, { state: { storeId: store.id } });
   };
 
   const columns: TableProps<Store>['columns'] = [

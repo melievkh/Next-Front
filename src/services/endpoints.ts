@@ -10,7 +10,7 @@ export const endpoints = {
   storeChangePassword: (id: string) => `/store/change-password/${id}`,
 
   outfits: '/outfits',
-  outfit: (id: string) => `/outfits/${id}`,
+  outfit: (id: string) => `/outfits/one/${id}`,
   outfitCreate: '/outfits',
   outfitUpdate: (id: string) => `/outfits/${id}`,
   outfitDelete: `/outfits/delete`,
