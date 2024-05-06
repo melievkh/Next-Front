@@ -17,6 +17,7 @@ import {
 } from 'react-icons/md';
 import { ROUTES } from '@/router/routes';
 import { FilterStoresOptions, Store } from '@/common/types/store.type';
+import { useUpdateStoreMutation } from '@/services/storeService';
 
 type Props = {
   storeData: Store[];
@@ -35,10 +36,22 @@ const StoresTable = ({
   setFilters,
   onDeleteStore,
 }: Props) => {
+  const [updateStore] = useUpdateStoreMutation();
   const navigate = useNavigate();
 
   const handleNavigateToEdit = (store: Store) => {
     navigate(ROUTES.EDIT_STORE, { state: { storeId: store.id } });
+  };
+
+  const handleUpdateStoreAvailability = async (
+    storeId: string,
+    checked: boolean,
+  ) => {
+    try {
+      await updateStore({ id: storeId, available: checked }).unwrap();
+    } catch (error) {
+      console.error('Error updating store availability:', error);
+    }
   };
 
   const columns: TableProps<Store>['columns'] = [
@@ -84,8 +97,15 @@ const StoresTable = ({
     {
       title: 'Availability',
       dataIndex: 'available',
-      render: (available: boolean) => {
-        return <Switch checked={available} />;
+      render: (available: boolean, record: Store) => {
+        return (
+          <Switch
+            defaultValue={available}
+            onClick={(checked) =>
+              handleUpdateStoreAvailability(record.id, checked)
+            }
+          />
+        );
       },
     },
     {

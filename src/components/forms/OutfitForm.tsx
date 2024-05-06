@@ -48,7 +48,18 @@ const OutfitForm = ({ mode, outfitData }: Props) => {
   const isEditMode = mode === 'EDIT';
 
   const handleFormSubmit = async (values: any) => {
-    console.log(values);
+    const imageUrls = fileList.map((file: UploadFile) => file.name);
+    if (isEditMode) {
+      await updateOutfit({ id: outfitData?.id, ...values }).unwrap();
+      message.success('Outfit updated successfully');
+    } else {
+      await createOutfit({
+        image_urls: imageUrls,
+        image_main: imageUrls[0],
+        ...values,
+      }).unwrap();
+      message.success('Outfit created successfully');
+    }
   };
 
   const uploadButton = (
@@ -83,18 +94,18 @@ const OutfitForm = ({ mode, outfitData }: Props) => {
   }) => setFileList(newFileList);
 
   const handleDeleteMedia = async (file: UploadFile) => {
-    const newFileList = fileList.filter(
-      (item: UploadFile) => item.uid !== file.uid,
-    );
-    setFileList(newFileList);
-
-    if (outfitData?.image_urls) {
+    if (isEditMode) {
       await deleteOutfitImage({
         store_id: outfitData?.store_id,
         outfit_id: outfitData?.id,
         image_url: file.url,
-      });
+      }).unwrap();
     }
+
+    const newFileList = fileList.filter(
+      (item: UploadFile) => item.uid !== file.uid,
+    );
+    setFileList(newFileList);
   };
 
   useEffect(() => {
@@ -207,7 +218,6 @@ const OutfitForm = ({ mode, outfitData }: Props) => {
       <Template>
         <Form.Item
           label="Images"
-          name="image_urls"
           rules={[
             { required: true, message: 'At least one image is required!' },
           ]}
